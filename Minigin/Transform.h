@@ -16,6 +16,7 @@ public:
 
 	virtual void Update(GameObject& gameObject) override;
 	virtual void Render(GameObject& gameObject) const override;
+	virtual void Recieve(int message) const override;
 
 	const glm::vec2& GetPosition() const;
 	void SetPosition(float x, float y);

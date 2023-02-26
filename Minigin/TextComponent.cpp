@@ -47,6 +47,10 @@ void TextComponent::Render(GameObject&) const
 	dae::Renderer::GetInstance().RenderTexture(*m_pTextTexture, pos.x, pos.y);
 }
 
+void TextComponent::Recieve(int) const
+{
+}
+
 void TextComponent::SetText(const std::string& text)
 {
 	m_Text = text;

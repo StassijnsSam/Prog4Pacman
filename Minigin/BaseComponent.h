@@ -14,5 +14,6 @@ public:
 
 	virtual void Update(GameObject& gameObject) = 0;
 	virtual void Render(GameObject& gameObject) const = 0;
+	virtual void Recieve(int message) const = 0;
 };
 

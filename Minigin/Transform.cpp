@@ -19,6 +19,10 @@ void Transform::Render(GameObject&) const
 	//Empty
 }
 
+void Transform::Recieve(int) const
+{
+}
+
 const glm::vec2& Transform::GetPosition() const
 {
 	return m_Position;
