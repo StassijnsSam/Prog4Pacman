@@ -1,14 +1,32 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "BaseComponent.h"
 
-namespace dae
+
+class Transform final : BaseComponent
 {
-	class Transform final
-	{
-	public:
-		const glm::vec3& GetPosition() const { return m_position; }
-		void SetPosition(float x, float y, float z);
-	private:
-		glm::vec3 m_position;
-	};
-}
+public:
+	Transform() = default;
+	virtual ~Transform() = default;
+
+	Transform(const Transform& other) = delete;
+	Transform& operator=(const Transform& other) = delete;
+	Transform(Transform&& other) = delete;
+	Transform& operator=(Transform&& other) = delete;
+
+	virtual void Update() override;
+	virtual void Render() const override;
+
+	const glm::vec2& GetPosition() const;
+	void SetPosition(float x, float y);
+	void SetPosition(glm::vec2& pos);
+
+	float GetRotation() const;
+	void SetRotation(float rot);
+
+private:
+	//Changed to 2D (Pac-man)
+	glm::vec2 m_Position{};
+	float m_Rotation{};
+};
+
