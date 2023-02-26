@@ -17,9 +17,22 @@ void FPSComponent::Update(GameObject&)
 	}
 	
 	float elapsedTime = Time::GetInstance().GetElapsedTime();
-	float FPS = 1.0f / elapsedTime;
 
-	m_pTextComponent->SetText(std::to_string(FPS));
+	m_CurrTime += elapsedTime;
+
+	if (m_CurrTime < m_MinTime) {
+		m_FrameAmount++;
+	}
+	else {
+		float FPS = m_FrameAmount / m_MinTime;
+		int FPSInt = static_cast<int>(FPS);
+
+		m_pTextComponent->SetText(std::to_string(FPSInt) + " FPS");
+
+		//Reset counters
+		m_CurrTime = 0.f;
+		m_FrameAmount = 0;
+	}
 }
 
 void FPSComponent::Render(const GameObject&) const
