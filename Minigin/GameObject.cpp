@@ -5,13 +5,11 @@
 
 dae::GameObject::~GameObject() = default;
 
-void dae::GameObject::Update(){}
+void dae::GameObject::Update()
+{
+}
 
 void dae::GameObject::Render() const
 {
 }
 
-void dae::GameObject::SetPosition(float x, float y)
-{
-	m_transform.SetPosition(x, y);
-}

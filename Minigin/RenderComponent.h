@@ -10,8 +10,7 @@ class Transform;
 class RenderComponent final : public BaseComponent
 {
 public:
-	RenderComponent();
-	RenderComponent(Transform* pTransform);
+	RenderComponent(const std::string& filename, Transform* pTransform);
 	virtual ~RenderComponent() = default;
 
 	RenderComponent(const RenderComponent& other) = delete;
@@ -25,7 +24,7 @@ public:
 	void SetTexture(const std::string& filename);
 private:
 
-	std::shared_ptr<dae::Texture2D> m_pTexture{nullptr};
-	Transform* m_pTransform{ nullptr };
+	std::shared_ptr<dae::Texture2D> m_pTexture;
+	Transform* m_pTransform;
 };
 

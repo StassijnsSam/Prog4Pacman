@@ -5,15 +5,10 @@
 #include "GameObject.h"
 #include "Transform.h"
 
-RenderComponent::RenderComponent()
+RenderComponent::RenderComponent(const std::string& filename, Transform* pTransform)
+	:m_pTransform(pTransform)
 {
-	//Need to get the transform!
-	//	Ownership? Pass Gameobject and getComponent?
-}
-
-RenderComponent::RenderComponent(Transform* pTransform)
-{
-	m_pTransform = pTransform;
+	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
 }
 
 void RenderComponent::Update(GameObject&)

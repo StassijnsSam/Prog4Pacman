@@ -1,6 +1,12 @@
 #include "Transform.h"
 #include "GameObject.h"
 
+Transform::Transform(glm::vec2& origin, float rot)
+{
+	m_Position = origin;
+	m_Rotation = rot;
+}
+
 void Transform::Update(GameObject&)
 {
 	//Empty

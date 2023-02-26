@@ -6,6 +6,7 @@ class Transform final : public BaseComponent
 {
 public:
 	Transform() = default;
+	Transform(glm::vec2& origin, float rot = 0);
 	virtual ~Transform() = default;
 
 	Transform(const Transform& other) = delete;
