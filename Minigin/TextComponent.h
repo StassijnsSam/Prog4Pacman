@@ -5,13 +5,14 @@
 #include "Texture2D.h"
 #include <string>
 #include <memory>
+#include <SDL_ttf.h>
 
 class Transform;
 
 class TextComponent final : public BaseComponent
 {
 public:
-	TextComponent(const std::string& text, std::shared_ptr<dae::Font> font, Transform* pTransform);
+	TextComponent(const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color, Transform* pTransform);
 	virtual ~TextComponent() = default;
 
 	TextComponent(const TextComponent& other) = delete;
@@ -29,6 +30,7 @@ private:
 	bool m_NeedsUpdate;
 	std::string m_Text;
 	std::shared_ptr<dae::Font> m_pFont;
+	SDL_Color m_Color;
 	std::shared_ptr<dae::Texture2D> m_pTextTexture;
 
 	Transform* m_pTransform;

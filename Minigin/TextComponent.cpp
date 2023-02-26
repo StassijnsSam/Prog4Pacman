@@ -5,8 +5,10 @@
 #include "Transform.h"
 #include "GameObject.h"
 
-TextComponent::TextComponent(const std::string& text, std::shared_ptr<dae::Font> font, Transform* pTransform)
-	: m_NeedsUpdate(true), m_Text(text), m_pFont(std::move(font)), m_pTextTexture(nullptr), m_pTransform(pTransform)
+
+
+TextComponent::TextComponent(const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color, Transform* pTransform)
+	: m_Text(text), m_pFont(font), m_Color(color), m_pTransform(pTransform), m_NeedsUpdate(true)
 {
 }
 
@@ -14,8 +16,8 @@ void TextComponent::Update(GameObject&)
 {
 	if (m_NeedsUpdate)
 	{
-		const SDL_Color color = { 255,255,255 }; // only white text is supported now
-		const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), m_Text.c_str(), color);
+		//const SDL_Color color = { 255,255,255 }; 
+		const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), m_Text.c_str(), m_Color);
 		if (surf == nullptr)
 		{
 			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
