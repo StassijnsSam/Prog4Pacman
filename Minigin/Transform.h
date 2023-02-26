@@ -2,8 +2,7 @@
 #include <glm/glm.hpp>
 #include "BaseComponent.h"
 
-
-class Transform final : BaseComponent
+class Transform final : public BaseComponent
 {
 public:
 	Transform() = default;
@@ -14,8 +13,8 @@ public:
 	Transform(Transform&& other) = delete;
 	Transform& operator=(Transform&& other) = delete;
 
-	virtual void Update() override;
-	virtual void Render() const override;
+	virtual void Update(GameObject& gameObject) override;
+	virtual void Render(GameObject& gameObject) const override;
 
 	const glm::vec2& GetPosition() const;
 	void SetPosition(float x, float y);

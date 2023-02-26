@@ -1,12 +1,14 @@
 #include "Transform.h"
+#include "GameObject.h"
 
-void Transform::Update()
+void Transform::Update(GameObject&)
 {
 	//Empty
 	//	Transform will be update elsewhere based on input or physics
+	//	Got rid of formal parameter (name for gameObject)
 }
 
-void Transform::Render() const
+void Transform::Render(GameObject&) const
 {
 	//Empty
 }

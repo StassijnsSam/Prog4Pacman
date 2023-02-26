@@ -1,4 +1,6 @@
 #pragma once
+class GameObject;
+
 class BaseComponent
 {
 public:
@@ -10,7 +12,7 @@ public:
 	BaseComponent(BaseComponent&& other) = delete;
 	BaseComponent& operator=(BaseComponent&& other) = delete;
 
-	virtual void Update() = 0;
-	virtual void Render() const = 0;
+	virtual void Update(GameObject& gameObject) = 0;
+	virtual void Render(GameObject& gameObject) const = 0;
 };
 
