@@ -1,16 +1,17 @@
 #pragma once
-class Time
+#include "Singleton.h"
+
+class Time final : public dae::Singleton<Time>
 {
 public:
-	static Time& instance() {
-		static Time* instance = new Time();
-		return *instance;
+	float GetElapsedTime() {
+		return m_ElapsedTime;
 	}
 
-	float GetDeltaTime() { return m_DeltaTime;}
+	void SetElapsedTime(float elapsedTime) {
+		m_ElapsedTime = elapsedTime;
+	}
 private:
-	Time() {};
-
-	float m_DeltaTime{};
+	float m_ElapsedTime{ 0.f };
 };
 

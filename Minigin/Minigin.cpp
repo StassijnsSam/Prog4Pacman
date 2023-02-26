@@ -10,6 +10,7 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include <chrono>
+#include "Time.h"
 
 SDL_Window* g_window{};
 
@@ -92,10 +93,12 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	while (doContinue)
 	{
 		const auto currTime = std::chrono::high_resolution_clock::now();
-		const float deltaTime = std::chrono::duration<float>(currTime - lastTime).count();
+		const float elapsedTime = std::chrono::duration<float>(currTime - lastTime).count();
 
 		lastTime = currTime;
-		lag += deltaTime;
+		lag += elapsedTime;
+
+		Time::GetInstance().SetElapsedTime(elapsedTime);
 
 		doContinue = input.ProcessInput();
 		//Add fixed update when we add Physics!
