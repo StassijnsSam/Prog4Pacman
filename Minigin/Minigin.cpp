@@ -93,12 +93,12 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	while (doContinue)
 	{
 		const auto currTime = std::chrono::high_resolution_clock::now();
-		const float elapsedTime = std::chrono::duration<float>(currTime - lastTime).count();
+		const float deltaTime = std::chrono::duration<float>(currTime - lastTime).count();
 
 		lastTime = currTime;
-		lag += elapsedTime;
+		lag += deltaTime;
 
-		Time::GetInstance().SetElapsedTime(elapsedTime);
+		Time::GetInstance().Update(deltaTime);
 
 		doContinue = input.ProcessInput();
 		//Add fixed update when we add Physics!

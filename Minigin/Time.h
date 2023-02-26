@@ -4,14 +4,11 @@
 class Time final : public dae::Singleton<Time>
 {
 public:
-	float GetElapsedTime() {
-		return m_ElapsedTime;
-	}
-
-	void SetElapsedTime(float elapsedTime) {
-		m_ElapsedTime = elapsedTime;
-	}
+	float GetDeltaTime();
+	float GetElapsedTime();
+	void Update(float deltaTime);
 private:
+	float m_DeltaTime{ 0.f };
 	float m_ElapsedTime{ 0.f };
 };
 

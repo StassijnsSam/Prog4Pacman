@@ -16,7 +16,7 @@ void FPSComponent::Update(GameObject&)
 		return;
 	}
 	
-	float elapsedTime = Time::GetInstance().GetElapsedTime();
+	float elapsedTime = Time::GetInstance().GetDeltaTime();
 
 	m_CurrTime += elapsedTime;
 
