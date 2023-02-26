@@ -14,7 +14,7 @@ void Transform::Update(GameObject&)
 	//	Got rid of formal parameter (name for gameObject)
 }
 
-void Transform::Render(GameObject&) const
+void Transform::Render(const GameObject&) const
 {
 	//Empty
 }

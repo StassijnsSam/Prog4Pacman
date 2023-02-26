@@ -6,7 +6,6 @@
 #include <string>
 #include <memory>
 
-class GameObject;
 class Transform;
 
 class TextComponent final : public BaseComponent
@@ -21,7 +20,7 @@ public:
 	TextComponent& operator=(TextComponent&& other) = delete;
 
 	virtual void Update(GameObject& gameObject) override;
-	virtual void Render(GameObject& gameObject) const override;
+	virtual void Render(const GameObject& gameObject) const override;
 	virtual void Recieve(int message) const override;
 
 	void SetText(const std::string& text);

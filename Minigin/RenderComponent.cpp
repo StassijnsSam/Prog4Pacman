@@ -2,8 +2,8 @@
 
 #include "ResourceManager.h"
 #include "Renderer.h"
-#include "GameObject.h"
 #include "Transform.h"
+#include "GameObject.h"
 
 RenderComponent::RenderComponent(const std::string& filename, Transform* pTransform)
 	:m_pTransform(pTransform)
@@ -17,7 +17,7 @@ void RenderComponent::Update(GameObject&)
 	//	Got rid of formal parameter (name of gameObject)
 }
 
-void RenderComponent::Render(GameObject&) const
+void RenderComponent::Render(const GameObject&) const
 {
 	if (m_pTexture == nullptr) {
 		//Throw error that texture is not set

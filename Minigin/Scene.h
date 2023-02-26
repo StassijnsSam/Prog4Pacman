@@ -1,9 +1,9 @@
 #pragma once
 #include "SceneManager.h"
+class GameObject;
 
 namespace dae
 {
-	class GameObject;
 	class Scene final
 	{
 		friend Scene& SceneManager::CreateScene(const std::string& name);

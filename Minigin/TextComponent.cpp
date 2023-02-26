@@ -3,6 +3,7 @@
 #include <SDL_ttf.h>
 #include "Renderer.h"
 #include "Transform.h"
+#include "GameObject.h"
 
 TextComponent::TextComponent(const std::string& text, std::shared_ptr<dae::Font> font, Transform* pTransform)
 	: m_NeedsUpdate(true), m_Text(text), m_pFont(std::move(font)), m_pTextTexture(nullptr), m_pTransform(pTransform)
@@ -30,7 +31,7 @@ void TextComponent::Update(GameObject&)
 	}
 }
 
-void TextComponent::Render(GameObject&) const
+void TextComponent::Render(const GameObject&) const
 {
 	if (m_pTextTexture == nullptr)
 	{

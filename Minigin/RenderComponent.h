@@ -1,8 +1,9 @@
 #pragma once
 #include <memory>
-#include "BaseComponent.h"
 #include <string>
 #include "Texture2D.h"
+
+#include "BaseComponent.h"
 
 //class Texture2D;
 class Transform;
@@ -19,7 +20,7 @@ public:
 	RenderComponent& operator=(RenderComponent&& other) = delete;
 
 	virtual void Update(GameObject& gameObject) override;
-	virtual void Render(GameObject& gameObject) const override;
+	virtual void Render(const GameObject& gameObject) const override;
 	virtual void Recieve(int message) const override;
 
 	void SetTexture(const std::string& filename);
