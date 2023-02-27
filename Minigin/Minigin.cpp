@@ -85,24 +85,36 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 
-	// todo: this update loop could use some work.
 	bool doContinue = true;
 	auto lastTime = std::chrono::high_resolution_clock::now();
-	float lag = 0.0f;
 
+	//float lag = 0.0f;
+	//const float timeStep = 0.02f;
+	const float desiredFPS{ 60.f };
+	const int frameTimeMs{ 1000 / desiredFPS };
 	while (doContinue)
 	{
 		const auto currTime = std::chrono::high_resolution_clock::now();
 		const float deltaTime = std::chrono::duration<float>(currTime - lastTime).count();
 
 		lastTime = currTime;
-		lag += deltaTime;
-
-		Time::GetInstance().Update(deltaTime);
+		//lag += deltaTime;
 
 		doContinue = input.ProcessInput();
-		//Add fixed update when we add Physics!
+		
+		/*while (lag >= timeStep) {
+			sceneManager.FixedUpdate();
+			Time::GetInstance().Update(timeStep);
+			lag -= timeStep;
+		}*/
+
 		sceneManager.Update();
+		Time::GetInstance().Update(deltaTime);
+
 		renderer.Render();
+
+		//Sleep to not always use CPU at 100%
+		const auto sleepTime = currTime + std::chrono::milliseconds(frameTimeMs) - std::chrono::high_resolution_clock::now();
+		std::this_thread::sleep_for(sleepTime);
 	}
 }
