@@ -16,5 +16,9 @@ public:
 	virtual void Update(GameObject& gameObject) = 0;
 	virtual void Render(const GameObject& gameObject) const = 0;
 	virtual void Recieve(int message) const = 0;
+
+	GameObject* GetOwner() const { return m_pOwner; }
+protected:
+	GameObject* m_pOwner{};
 };
 

@@ -6,8 +6,7 @@
 
 class BaseComponent;
 
-class GameObject final
-	{
+class GameObject final{
 public:
 	GameObject() = default;
 	~GameObject();
@@ -36,7 +35,7 @@ public:
 	template <typename ComponentType> ComponentType* GetComponent() const {
 		//Check if it has a component of this type
 		if (!HasComponent<ComponentType>()) {
-			//Some kind of error or logging, otherwise nullptr issues in the future possibly
+			//Some kind of error or logging
 			return nullptr;
 		}
 
