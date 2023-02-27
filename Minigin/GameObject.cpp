@@ -22,6 +22,16 @@ void GameObject::Update()
 	}
 }
 
+void GameObject::LateUpdate()
+{
+	for (auto& it : m_pComponents) {
+		if (it.second != nullptr && it.second->IsMarkedForDeletion()) {
+			delete it.second;
+			it.second = nullptr;
+		}
+	}
+}
+
 void GameObject::Render() const
 {
 	for (auto& it : m_pComponents) {

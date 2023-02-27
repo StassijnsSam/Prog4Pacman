@@ -16,6 +16,7 @@ public:
 	GameObject& operator=(GameObject&& other) = delete;
 		
 	void Update();
+	void LateUpdate();
 	void Render() const;
 
 	template <typename ComponentType> void AddComponent(ComponentType* component) {
@@ -54,10 +55,9 @@ public:
 
 		const std::type_index typeIndex = std::type_index(typeid(ComponentType));
 
-		//Delete the component
+		//Mark the component for deletion
 		ComponentType* component = m_pComponents.at(typeIndex);
-		delete component;
-		component = nullptr;
+		component->MarkForDeletion();
 
 		//Erase from container
 		m_pComponents.erase(typeIndex);

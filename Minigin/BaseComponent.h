@@ -18,7 +18,10 @@ public:
 	virtual void Recieve(int message) const = 0;
 
 	GameObject* GetOwner() const { return m_pOwner; }
+	void MarkForDeletion(){ m_MarkedForDeletion = true; }
+	bool IsMarkedForDeletion() { return m_MarkedForDeletion; }
 protected:
 	GameObject* m_pOwner{};
+	bool m_MarkedForDeletion{ false };
 };
 
