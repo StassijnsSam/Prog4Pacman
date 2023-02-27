@@ -2,13 +2,13 @@
 #include <stdexcept>
 #include <SDL_ttf.h>
 #include "Renderer.h"
-#include "Transform.h"
+#include "RenderComponent.h"
 #include "GameObject.h"
 
 
 
-TextComponent::TextComponent(const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color, Transform* pTransform)
-	: m_Text(text), m_pFont(font), m_Color(color), m_pTransform(pTransform), m_NeedsUpdate(true)
+TextComponent::TextComponent(const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color, RenderComponent* pRenderComponent)
+	: m_Text(text), m_pFont(font), m_Color(color), m_pRenderComponent(pRenderComponent), m_NeedsUpdate(true)
 {
 }
 
@@ -28,26 +28,17 @@ void TextComponent::Update(GameObject&)
 			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 		}
 		SDL_FreeSurface(surf);
-		m_pTextTexture = std::make_shared<dae::Texture2D>(texture);
+		auto pTexture = std::make_shared<dae::Texture2D>(texture);
+
+		if (m_pRenderComponent != nullptr) {
+			m_pRenderComponent->SetTexture(pTexture);
+		}
 		m_NeedsUpdate = false;
 	}
 }
 
 void TextComponent::Render(const GameObject&) const
 {
-	if (m_pTextTexture == nullptr)
-	{
-		//Error that textTexture is not set properly
-		return;
-	}
-
-	if (m_pTransform == nullptr) {
-		//Error that transform is not set properly
-		return;
-	}
-
-	const auto& pos = m_pTransform->GetPosition();
-	dae::Renderer::GetInstance().RenderTexture(*m_pTextTexture, pos.x, pos.y);
 }
 
 void TextComponent::Recieve(int) const

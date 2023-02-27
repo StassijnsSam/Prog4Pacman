@@ -7,12 +7,12 @@
 #include <memory>
 #include <SDL_ttf.h>
 
-class Transform;
+class RenderComponent;
 
 class TextComponent final : public BaseComponent
 {
 public:
-	TextComponent(const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color, Transform* pTransform);
+	TextComponent(const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color, RenderComponent* pRenderComponent);
 	virtual ~TextComponent() = default;
 
 	TextComponent(const TextComponent& other) = delete;
@@ -27,12 +27,11 @@ public:
 	void SetText(const std::string& text);
 
 private:
-	bool m_NeedsUpdate;
-	std::string m_Text;
-	std::shared_ptr<dae::Font> m_pFont;
-	SDL_Color m_Color;
-	std::shared_ptr<dae::Texture2D> m_pTextTexture;
+	bool m_NeedsUpdate{ false };
+	std::string m_Text{};
+	std::shared_ptr<dae::Font> m_pFont{};
+	SDL_Color m_Color{};
 
-	Transform* m_pTransform;
+	RenderComponent* m_pRenderComponent{};
 };
 

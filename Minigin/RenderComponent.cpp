@@ -41,3 +41,8 @@ void RenderComponent::SetTexture(const std::string& filename)
 {
 	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
 }
+
+void RenderComponent::SetTexture(std::shared_ptr<dae::Texture2D> pTexture)
+{
+	m_pTexture = pTexture;
+}
