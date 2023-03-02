@@ -113,6 +113,8 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 		renderer.Render();
 
+		sceneManager.LateUpdate();
+
 		//Sleep to not always use CPU at 100%
 		const auto sleepTime = currTime + std::chrono::milliseconds(frameTimeMs) - std::chrono::high_resolution_clock::now();
 		std::this_thread::sleep_for(sleepTime);

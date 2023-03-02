@@ -51,3 +51,15 @@ void GameObject::Send(int message)
 	}
 }
 
+void GameObject::MarkForDeletion()
+{
+	m_IsMarkedForDeletion = true;
+
+	//Also mark all of the components of this object for deletion
+	for (auto it : m_pComponents) {
+		if (it.second != nullptr) {
+			it.second->MarkForDeletion();
+		}
+	}
+}
+

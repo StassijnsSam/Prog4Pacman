@@ -73,7 +73,11 @@ public:
 
 	void Send(int message);
 
+	bool IsMarkedForDeletion() { return m_IsMarkedForDeletion; }
+	void MarkForDeletion();
+
 private:
 	//ID system for gameObjects?
+	bool m_IsMarkedForDeletion{ false };
 	std::unordered_map<std::type_index, BaseComponent*> m_pComponents{};
 };
