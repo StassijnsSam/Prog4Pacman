@@ -86,6 +86,7 @@ namespace dae {
 
 		//Children
 		void SetParent(GameObject* pParent);
+		void RemoveParent();
 
 	private:
 		//ID system for gameObjects?

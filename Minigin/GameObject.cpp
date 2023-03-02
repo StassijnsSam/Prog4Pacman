@@ -79,6 +79,11 @@ void dae::GameObject::SetParent(GameObject* pParent)
 	}
 }
 
+void dae::GameObject::RemoveParent()
+{
+	SetParent(nullptr);
+}
+
 void dae::GameObject::RemoveChild(GameObject* pChild)
 {
 	auto it = std::find(m_pChildren.begin(), m_pChildren.end(), pChild);
