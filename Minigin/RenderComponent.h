@@ -31,7 +31,7 @@ namespace dae {
 	private:
 
 		std::shared_ptr<dae::Texture2D> m_pTexture{ nullptr };
-		std::shared_ptr <Transform> m_pTransform{ nullptr };
+		Transform* m_pTransform{ nullptr };
 	};
 }
 

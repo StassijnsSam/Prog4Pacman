@@ -28,7 +28,7 @@ namespace dae {
 		float m_CurrTime{ 0.0f };
 		int m_FrameAmount{ 0 };
 
-		std::shared_ptr<TextComponent> m_pTextComponent{ nullptr };
+		TextComponent* m_pTextComponent{};
 	};
 }
 

@@ -21,7 +21,7 @@ namespace dae {
 		void LateUpdate();
 		void Render() const;
 
-		template <typename ComponentType, typename... Args> std::shared_ptr<ComponentType> AddComponent(Args&&... args) {
+		template <typename ComponentType, typename... Args> ComponentType* AddComponent(Args&&... args) {
 			//Check if it already has a component of this type
 			if (HasComponent<ComponentType>()) {
 				//2 options
@@ -32,14 +32,14 @@ namespace dae {
 
 			const std::type_index typeIndex = std::type_index(typeid(ComponentType));
 			//Make a new component of this type and instantly set the owner
-			auto component = std::make_shared<ComponentType>(this, std::forward<Args>(args)...);
+			auto component = std::make_unique<ComponentType>(this, std::forward<Args>(args)...);
 
-			m_pComponents.emplace(typeIndex, component);
+			m_pComponents.emplace(typeIndex, std::move(component));
 
-			return component;
+			return component.get();
 		};
 
-		template <typename ComponentType> std::shared_ptr<ComponentType> GetComponent() const {
+		template <typename ComponentType> ComponentType* GetComponent() const {
 			//Check if it has a component of this type
 			if (!HasComponent<ComponentType>()) {
 				//Some kind of error or logging
@@ -48,7 +48,7 @@ namespace dae {
 
 			const std::type_index typeIndex = std::type_index(typeid(ComponentType));
 
-			auto component = std::dynamic_pointer_cast<ComponentType>(m_pComponents.at(typeIndex));
+			auto component = dynamic_cast<ComponentType*>(m_pComponents.at(typeIndex).get());
 
 			return component;
 		};
@@ -90,7 +90,7 @@ namespace dae {
 	private:
 		//ID system for gameObjects?
 		bool m_IsMarkedForDeletion{ false };
-		std::unordered_map<std::type_index, std::shared_ptr<BaseComponent>> m_pComponents{};
+		std::unordered_map<std::type_index, std::unique_ptr<BaseComponent>> m_pComponents{};
 
 		//Parent and children
 		void RemoveChild(GameObject* pChild);
