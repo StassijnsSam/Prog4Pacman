@@ -15,6 +15,7 @@ public:
 	FPSComponent(FPSComponent&& other) = delete;
 	FPSComponent& operator=(FPSComponent&& other) = delete;
 
+	virtual void Initialize() override;
 	virtual void Update(GameObject& gameObject) override;
 	virtual void Render(const GameObject& gameObject) const override;
 	virtual void Recieve(int message)const override;

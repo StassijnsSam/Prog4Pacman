@@ -8,18 +8,23 @@
 RenderComponent::RenderComponent(GameObject* pOwner)
 	:BaseComponent(pOwner)
 {
-	if (pOwner != nullptr) {
-		auto transform = pOwner->GetComponent<Transform>();
-		if (transform != nullptr) {
-			m_pTransform = transform;
-		}
-		else {
-			//transform not found
-		}
+}
+
+void RenderComponent::Initialize()
+{
+	if (m_pOwner == nullptr){
+		//owner is not set correctly
+		return;
 	}
-	else {
-		//owner not set
+
+	auto transform = m_pOwner->GetComponent<Transform>();
+	if (transform == nullptr) {
+		//transform component not found
+		return;
 	}
+
+	m_pTransform = transform;
+
 }
 
 void RenderComponent::Update(GameObject&)

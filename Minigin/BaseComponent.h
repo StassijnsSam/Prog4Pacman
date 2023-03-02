@@ -13,6 +13,7 @@ public:
 	BaseComponent(BaseComponent&& other) = delete;
 	BaseComponent& operator=(BaseComponent&& other) = delete;
 
+	virtual void Initialize() = 0;
 	virtual void Update(GameObject& gameObject) = 0;
 	virtual void Render(const GameObject& gameObject) const = 0;
 	virtual void Recieve(int message) const = 0;

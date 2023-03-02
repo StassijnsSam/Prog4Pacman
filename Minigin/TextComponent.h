@@ -21,6 +21,7 @@ public:
 	TextComponent(TextComponent&& other) = delete;
 	TextComponent& operator=(TextComponent&& other) = delete;
 
+	virtual void Initialize() override;
 	virtual void Update(GameObject& gameObject) override;
 	virtual void Render(const GameObject& gameObject) const override;
 	virtual void Recieve(int message) const override;
@@ -31,7 +32,8 @@ private:
 	bool m_NeedsUpdate{ false };
 	std::string m_Text{};
 	std::shared_ptr<dae::Font> m_pFont{};
-	SDL_Color m_Color{};
+	//default color white
+	SDL_Color m_Color{1, 1, 1};
 
 	RenderComponent* m_pRenderComponent{};
 };

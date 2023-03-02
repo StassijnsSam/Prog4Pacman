@@ -14,7 +14,8 @@ public:
 	GameObject(GameObject&& other) = delete;
 	GameObject& operator=(const GameObject& other) = delete;
 	GameObject& operator=(GameObject&& other) = delete;
-		
+	
+	void Initialize();
 	void Update();
 	void LateUpdate();
 	void Render() const;

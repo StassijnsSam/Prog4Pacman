@@ -13,6 +13,15 @@ GameObject::~GameObject() {
 	}
 };
 
+void GameObject::Initialize()
+{
+	for (auto& it : m_pComponents) {
+		if (it.second != nullptr) {
+			it.second->Initialize();
+		}
+	}
+}
+
 void GameObject::Update()
 {
 	for (auto& it : m_pComponents) {

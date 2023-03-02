@@ -9,6 +9,23 @@ FPSComponent::FPSComponent(GameObject* pOwner)
 {
 }
 
+void FPSComponent::Initialize()
+{
+	//Needs a text component to work
+	if (m_pOwner == nullptr) {
+		//owner is not set correctly
+		return;
+	}
+
+	auto textComponent = m_pOwner->GetComponent<TextComponent>();
+	if (textComponent == nullptr) {
+		//textcomponent is not found
+		return;
+	}
+
+	m_pTextComponent = textComponent;
+}
+
 void FPSComponent::Update(GameObject&)
 {
 	//If the textComponent is not set throw an error

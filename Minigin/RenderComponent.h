@@ -19,6 +19,7 @@ public:
 	RenderComponent(RenderComponent&& other) = delete;
 	RenderComponent& operator=(RenderComponent&& other) = delete;
 
+	virtual void Initialize() override;
 	virtual void Update(GameObject& gameObject) override;
 	virtual void Render(const GameObject& gameObject) const override;
 	virtual void Recieve(int message) const override;

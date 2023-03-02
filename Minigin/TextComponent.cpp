@@ -12,6 +12,22 @@ TextComponent::TextComponent(GameObject* pOwner)
 {
 }
 
+void TextComponent::Initialize()
+{
+	if (m_pOwner == nullptr) {
+		//owner not set correctly
+		return;
+	}
+
+	auto renderComponent = m_pOwner->GetComponent<RenderComponent>();
+	if (renderComponent == nullptr) {
+		//rendercomponent not found
+		return;
+	}
+
+	m_pRenderComponent = renderComponent;
+}
+
 void TextComponent::Update(GameObject&)
 {
 	if (m_NeedsUpdate)

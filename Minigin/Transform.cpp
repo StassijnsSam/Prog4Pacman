@@ -12,6 +12,10 @@ Transform::Transform(GameObject* pOwner)
 {
 }
 
+void Transform::Initialize()
+{
+}
+
 void Transform::Update(GameObject&)
 {
 	//Empty
