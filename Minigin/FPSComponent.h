@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+#include <memory>
 
 namespace dae {
 
@@ -27,7 +28,7 @@ namespace dae {
 		float m_CurrTime{ 0.0f };
 		int m_FrameAmount{ 0 };
 
-		TextComponent* m_pTextComponent{ nullptr };
+		std::shared_ptr<TextComponent> m_pTextComponent{ nullptr };
 	};
 }
 

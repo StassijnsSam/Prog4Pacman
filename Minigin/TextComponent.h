@@ -39,7 +39,7 @@ namespace dae {
 		//default color white
 		SDL_Color m_Color{ 255, 255, 255 };
 
-		RenderComponent* m_pRenderComponent{};
+		std::shared_ptr <RenderComponent> m_pRenderComponent{nullptr};
 	};
 }
 

@@ -21,7 +21,7 @@ namespace dae {
 		void LateUpdate();
 		void Render() const;
 
-		template <typename ComponentType, typename... Args> ComponentType* AddComponent(Args&&... args) {
+		template <typename ComponentType, typename... Args> std::shared_ptr<ComponentType> AddComponent(Args&&... args) {
 			//Check if it already has a component of this type
 			if (HasComponent<ComponentType>()) {
 				//2 options
@@ -36,10 +36,10 @@ namespace dae {
 
 			m_pComponents.emplace(typeIndex, component);
 
-			return component.get();
+			return component;
 		};
 
-		template <typename ComponentType> ComponentType* GetComponent() const {
+		template <typename ComponentType> std::shared_ptr<ComponentType> GetComponent() const {
 			//Check if it has a component of this type
 			if (!HasComponent<ComponentType>()) {
 				//Some kind of error or logging
@@ -48,7 +48,7 @@ namespace dae {
 
 			const std::type_index typeIndex = std::type_index(typeid(ComponentType));
 
-			ComponentType* component = dynamic_cast<ComponentType*>(m_pComponents.at(typeIndex).get());
+			auto component = std::dynamic_pointer_cast<ComponentType>(m_pComponents.at(typeIndex));
 
 			return component;
 		};
