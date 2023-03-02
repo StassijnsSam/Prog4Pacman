@@ -4,7 +4,7 @@
 #include "Renderer.h"
 #include "BaseComponent.h"
 
-GameObject::~GameObject() {
+dae::GameObject::~GameObject() {
 	for (auto& it : m_pComponents) {
 		if (it.second != nullptr) {
 			delete it.second;
@@ -13,7 +13,7 @@ GameObject::~GameObject() {
 	}
 };
 
-void GameObject::Initialize()
+void dae::GameObject::Initialize()
 {
 	for (auto& it : m_pComponents) {
 		if (it.second != nullptr) {
@@ -22,16 +22,16 @@ void GameObject::Initialize()
 	}
 }
 
-void GameObject::Update()
+void dae::GameObject::Update()
 {
 	for (auto& it : m_pComponents) {
 		if (it.second != nullptr) {
-			it.second->Update(*this);
+			it.second->Update();
 		}
 	}
 }
 
-void GameObject::LateUpdate()
+void dae::GameObject::LateUpdate()
 {
 	for (auto& it : m_pComponents) {
 		if (it.second != nullptr && it.second->IsMarkedForDeletion()) {
@@ -41,16 +41,16 @@ void GameObject::LateUpdate()
 	}
 }
 
-void GameObject::Render() const
+void dae::GameObject::Render() const
 {
 	for (auto& it : m_pComponents) {
 		if (it.second != nullptr) {
-			it.second->Render(*this);
+			it.second->Render();
 		}
 	}
 }
 
-void GameObject::Send(int message)
+void dae::GameObject::Send(int message)
 {
 	//Send message to all components
 	for (auto& it : m_pComponents) {
@@ -60,12 +60,12 @@ void GameObject::Send(int message)
 	}
 }
 
-void GameObject::MarkForDeletion()
+void dae::GameObject::MarkForDeletion()
 {
 	m_IsMarkedForDeletion = true;
 
 	//Also mark all of the components of this object for deletion
-	for (auto it : m_pComponents) {
+	for (const auto& it : m_pComponents) {
 		if (it.second != nullptr) {
 			it.second->MarkForDeletion();
 		}

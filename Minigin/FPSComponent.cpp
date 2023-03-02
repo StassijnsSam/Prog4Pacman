@@ -4,12 +4,12 @@
 #include "GameObject.h"
 #include "Time.h"
 
-FPSComponent::FPSComponent(GameObject* pOwner)
+dae::FPSComponent::FPSComponent(GameObject* pOwner)
 	: BaseComponent(pOwner)
 {
 }
 
-void FPSComponent::Initialize()
+void dae::FPSComponent::Initialize()
 {
 	//Needs a text component to work
 	if (m_pOwner == nullptr) {
@@ -26,7 +26,7 @@ void FPSComponent::Initialize()
 	m_pTextComponent = textComponent;
 }
 
-void FPSComponent::Update(GameObject&)
+void dae::FPSComponent::Update()
 {
 	//If the textComponent is not set throw an error
 	if (m_pTextComponent == nullptr) {
@@ -52,10 +52,10 @@ void FPSComponent::Update(GameObject&)
 	}
 }
 
-void FPSComponent::Render(const GameObject&) const
+void dae::FPSComponent::Render() const
 {
 }
 
-void FPSComponent::Recieve(int) const
+void dae::FPSComponent::Recieve(int) const
 {
 }

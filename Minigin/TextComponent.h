@@ -7,36 +7,39 @@
 #include <memory>
 #include <SDL_ttf.h>
 
-class RenderComponent;
+namespace dae {
 
-class TextComponent final : public BaseComponent
-{
-public:
-	TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color={255, 255, 255});
-	TextComponent(GameObject* pOwner);
-	virtual ~TextComponent() = default;
+	class RenderComponent;
 
-	TextComponent(const TextComponent& other) = delete;
-	TextComponent& operator=(const TextComponent& other) = delete;
-	TextComponent(TextComponent&& other) = delete;
-	TextComponent& operator=(TextComponent&& other) = delete;
+	class TextComponent final : public BaseComponent
+	{
+	public:
+		TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color = { 255, 255, 255 });
+		TextComponent(GameObject* pOwner);
+		virtual ~TextComponent() = default;
 
-	virtual void Initialize() override;
-	virtual void Update(GameObject& gameObject) override;
-	virtual void Render(const GameObject& gameObject) const override;
-	virtual void Recieve(int message) const override;
+		TextComponent(const TextComponent& other) = delete;
+		TextComponent& operator=(const TextComponent& other) = delete;
+		TextComponent(TextComponent&& other) = delete;
+		TextComponent& operator=(TextComponent&& other) = delete;
 
-	void SetText(const std::string& text);
-	void SetColor(const SDL_Color& color);
-	void SetFont(std::shared_ptr<dae::Font> font);
+		virtual void Initialize() override;
+		virtual void Update() override;
+		virtual void Render() const override;
+		virtual void Recieve(int message) const override;
 
-private:
-	bool m_NeedsUpdate{ true };
-	std::string m_Text{};
-	std::shared_ptr<dae::Font> m_pFont{};
-	//default color white
-	SDL_Color m_Color{255, 255, 255};
+		void SetText(const std::string& text);
+		void SetColor(const SDL_Color& color);
+		void SetFont(std::shared_ptr<Font> font);
 
-	RenderComponent* m_pRenderComponent{};
-};
+	private:
+		bool m_NeedsUpdate{ true };
+		std::string m_Text{};
+		std::shared_ptr<Font> m_pFont{};
+		//default color white
+		SDL_Color m_Color{ 255, 255, 255 };
+
+		RenderComponent* m_pRenderComponent{};
+	};
+}
 

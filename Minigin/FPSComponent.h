@@ -1,30 +1,33 @@
 #pragma once
 #include "BaseComponent.h"
 
-class TextComponent;
+namespace dae {
 
-class FPSComponent final : public BaseComponent
-{
-public:
+	class TextComponent;
 
-	FPSComponent(GameObject* pOwner);
-	virtual ~FPSComponent() = default;
+	class FPSComponent final : public BaseComponent
+	{
+	public:
 
-	FPSComponent(const FPSComponent& other) = delete;
-	FPSComponent& operator=(const FPSComponent& other) = delete;
-	FPSComponent(FPSComponent&& other) = delete;
-	FPSComponent& operator=(FPSComponent&& other) = delete;
+		FPSComponent(GameObject* pOwner);
+		virtual ~FPSComponent() = default;
 
-	virtual void Initialize() override;
-	virtual void Update(GameObject& gameObject) override;
-	virtual void Render(const GameObject& gameObject) const override;
-	virtual void Recieve(int message)const override;
+		FPSComponent(const FPSComponent& other) = delete;
+		FPSComponent& operator=(const FPSComponent& other) = delete;
+		FPSComponent(FPSComponent&& other) = delete;
+		FPSComponent& operator=(FPSComponent&& other) = delete;
 
-private:
-	const float m_MinTime{ 1.0f };
-	float m_CurrTime{ 0.0f };
-	int m_FrameAmount{ 0 };
+		virtual void Initialize() override;
+		virtual void Update() override;
+		virtual void Render() const override;
+		virtual void Recieve(int message)const override;
 
-	TextComponent* m_pTextComponent{ nullptr };
-};
+	private:
+		const float m_MinTime{ 1.0f };
+		float m_CurrTime{ 0.0f };
+		int m_FrameAmount{ 0 };
+
+		TextComponent* m_pTextComponent{ nullptr };
+	};
+}
 

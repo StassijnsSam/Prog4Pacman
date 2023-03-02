@@ -5,18 +5,18 @@
 #include "Transform.h"
 #include "GameObject.h"
 
-RenderComponent::RenderComponent(GameObject* pOwner)
+dae::RenderComponent::RenderComponent(GameObject* pOwner)
 	:BaseComponent(pOwner)
 {
 }
 
-RenderComponent::RenderComponent(GameObject* pOwner, const std::string& filename)
+dae::RenderComponent::RenderComponent(GameObject* pOwner, const std::string& filename)
 	:BaseComponent(pOwner)
 {
 	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
 }
 
-void RenderComponent::Initialize()
+void dae::RenderComponent::Initialize()
 {
 	if (m_pOwner == nullptr){
 		//owner is not set correctly
@@ -32,13 +32,13 @@ void RenderComponent::Initialize()
 	m_pTransform = transform;
 }
 
-void RenderComponent::Update(GameObject&)
+void dae::RenderComponent::Update()
 {
 	//Empty
 	//	Got rid of formal parameter (name of gameObject)
 }
 
-void RenderComponent::Render(const GameObject&) const
+void dae::RenderComponent::Render() const
 {
 	if (m_pTexture == nullptr) {
 		//Throw error that texture is not set
@@ -54,16 +54,16 @@ void RenderComponent::Render(const GameObject&) const
 	dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 }
 
-void RenderComponent::Recieve(int) const
+void dae::RenderComponent::Recieve(int) const
 {
 }
 
-void RenderComponent::SetTexture(const std::string& filename)
+void dae::RenderComponent::SetTexture(const std::string& filename)
 {
 	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
 }
 
-void RenderComponent::SetTexture(std::shared_ptr<dae::Texture2D> pTexture)
+void dae::RenderComponent::SetTexture(std::shared_ptr<dae::Texture2D> pTexture)
 {
 	m_pTexture = pTexture;
 }

@@ -7,17 +7,17 @@
 
 
 
-TextComponent::TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color)
+dae::TextComponent::TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color)
 	:BaseComponent(pOwner), m_pFont{font}, m_Color{color}, m_Text{text}
 {
 }
 
-TextComponent::TextComponent(GameObject* pOwner)
+dae::TextComponent::TextComponent(GameObject* pOwner)
 	:BaseComponent(pOwner)
 {
 }
 
-void TextComponent::Initialize()
+void dae::TextComponent::Initialize()
 {
 	if (m_pOwner == nullptr) {
 		//owner not set correctly
@@ -33,7 +33,7 @@ void TextComponent::Initialize()
 	m_pRenderComponent = renderComponent;
 }
 
-void TextComponent::Update(GameObject&)
+void dae::TextComponent::Update()
 {
 	if (m_NeedsUpdate)
 	{
@@ -58,26 +58,26 @@ void TextComponent::Update(GameObject&)
 	}
 }
 
-void TextComponent::Render(const GameObject&) const
+void dae::TextComponent::Render() const
 {
 }
 
-void TextComponent::Recieve(int) const
+void dae::TextComponent::Recieve(int) const
 {
 }
 
-void TextComponent::SetText(const std::string& text)
+void dae::TextComponent::SetText(const std::string& text)
 {
 	m_Text = text;
 	m_NeedsUpdate = true;
 }
 
-void TextComponent::SetColor(const SDL_Color& color)
+void dae::TextComponent::SetColor(const SDL_Color& color)
 {
 	m_Color = color;
 }
 
-void TextComponent::SetFont(std::shared_ptr<dae::Font> font)
+void dae::TextComponent::SetFont(std::shared_ptr<dae::Font> font)
 {
 	m_pFont = font;
 }

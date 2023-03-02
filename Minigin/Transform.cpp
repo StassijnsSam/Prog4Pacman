@@ -1,58 +1,58 @@
 #include "Transform.h"
 #include "GameObject.h"
 
-Transform::Transform(GameObject* pOwner)
+dae::Transform::Transform(GameObject* pOwner)
 	:BaseComponent(pOwner)
 {
 }
 
-Transform::Transform(GameObject* pOwner, const glm::vec2& origin, float rot)
+dae::Transform::Transform(GameObject* pOwner, const glm::vec2& origin, float rot)
 	:BaseComponent(pOwner), m_Position{origin}, m_Rotation{rot}
 {
 }
 
-void Transform::Initialize()
+void dae::Transform::Initialize()
 {
 }
 
-void Transform::Update(GameObject&)
+void dae::Transform::Update()
 {
 	//Empty
 	//	Transform will be update elsewhere based on input or physics
 	//	Got rid of formal parameter (name for gameObject)
 }
 
-void Transform::Render(const GameObject&) const
+void dae::Transform::Render() const
 {
 	//Empty
 }
 
-void Transform::Recieve(int) const
+void dae::Transform::Recieve(int) const
 {
 }
 
-const glm::vec2& Transform::GetPosition() const
+const glm::vec2& dae::Transform::GetPosition() const
 {
 	return m_Position;
 }
 
-float Transform::GetRotation() const
+float dae::Transform::GetRotation() const
 {
 	return m_Rotation;
 }
 
-void Transform::SetRotation(float rot)
+void dae::Transform::SetRotation(float rot)
 {
 	m_Rotation = rot;
 }
 
-void Transform::SetPosition(const float x, const float y)
+void dae::Transform::SetPosition(const float x, const float y)
 {
 	m_Position.x = x;
 	m_Position.y = y;
 }
 
-void Transform::SetPosition(glm::vec2& pos)
+void dae::Transform::SetPosition(glm::vec2& pos)
 {
 	SetPosition(pos.x, pos.y);
 }

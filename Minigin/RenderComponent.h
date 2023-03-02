@@ -2,34 +2,36 @@
 #include <memory>
 #include <string>
 #include "Texture2D.h"
-
 #include "BaseComponent.h"
 
-//class Texture2D;
-class Transform;
+namespace dae {
 
-class RenderComponent final : public BaseComponent
-{
-public:
-	RenderComponent(GameObject* pOwner);
-	RenderComponent(GameObject* pOwner, const std::string& filename);
-	virtual ~RenderComponent() = default;
+	//class Texture2D;
+	class Transform;
 
-	RenderComponent(const RenderComponent& other) = delete;
-	RenderComponent& operator=(const RenderComponent& other) = delete;
-	RenderComponent(RenderComponent&& other) = delete;
-	RenderComponent& operator=(RenderComponent&& other) = delete;
+	class RenderComponent final : public BaseComponent
+	{
+	public:
+		RenderComponent(GameObject* pOwner);
+		RenderComponent(GameObject* pOwner, const std::string& filename);
+		virtual ~RenderComponent() = default;
 
-	virtual void Initialize() override;
-	virtual void Update(GameObject& gameObject) override;
-	virtual void Render(const GameObject& gameObject) const override;
-	virtual void Recieve(int message) const override;
+		RenderComponent(const RenderComponent& other) = delete;
+		RenderComponent& operator=(const RenderComponent& other) = delete;
+		RenderComponent(RenderComponent&& other) = delete;
+		RenderComponent& operator=(RenderComponent&& other) = delete;
 
-	void SetTexture(const std::string& filename);
-	void SetTexture(std::shared_ptr<dae::Texture2D> pTexture);
-private:
+		virtual void Initialize() override;
+		virtual void Update() override;
+		virtual void Render() const override;
+		virtual void Recieve(int message) const override;
 
-	std::shared_ptr<dae::Texture2D> m_pTexture{nullptr};
-	Transform* m_pTransform{nullptr};
-};
+		void SetTexture(const std::string& filename);
+		void SetTexture(std::shared_ptr<dae::Texture2D> pTexture);
+	private:
+
+		std::shared_ptr<dae::Texture2D> m_pTexture{ nullptr };
+		Transform* m_pTransform{ nullptr };
+	};
+}
 
