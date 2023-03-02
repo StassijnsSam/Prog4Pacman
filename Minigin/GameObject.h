@@ -10,7 +10,7 @@ namespace dae {
 	class GameObject final {
 	public:
 		GameObject() = default;
-		~GameObject();
+		~GameObject() = default;
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
@@ -32,11 +32,11 @@ namespace dae {
 
 			const std::type_index typeIndex = std::type_index(typeid(ComponentType));
 			//Make a new component of this type and instantly set the owner
-			auto component = new ComponentType(this, std::forward<Args>(args)...);
+			auto component = std::make_shared<ComponentType>(this, std::forward<Args>(args)...);
 
 			m_pComponents.emplace(typeIndex, component);
 
-			return component;
+			return component.get();
 		};
 
 		template <typename ComponentType> ComponentType* GetComponent() const {
@@ -48,7 +48,7 @@ namespace dae {
 
 			const std::type_index typeIndex = std::type_index(typeid(ComponentType));
 
-			ComponentType* component = dynamic_cast<ComponentType*>(m_pComponents.at(typeIndex));
+			ComponentType* component = dynamic_cast<ComponentType*>(m_pComponents.at(typeIndex).get());
 
 			return component;
 		};
@@ -85,6 +85,6 @@ namespace dae {
 	private:
 		//ID system for gameObjects?
 		bool m_IsMarkedForDeletion{ false };
-		std::unordered_map<std::type_index, BaseComponent*> m_pComponents{};
+		std::unordered_map<std::type_index, std::shared_ptr<BaseComponent>> m_pComponents{};
 	};
 }

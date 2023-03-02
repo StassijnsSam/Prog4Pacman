@@ -4,15 +4,6 @@
 #include "Renderer.h"
 #include "BaseComponent.h"
 
-dae::GameObject::~GameObject() {
-	for (auto& it : m_pComponents) {
-		if (it.second != nullptr) {
-			delete it.second;
-			it.second = nullptr;
-		}
-	}
-};
-
 void dae::GameObject::Initialize()
 {
 	for (auto& it : m_pComponents) {
@@ -35,8 +26,8 @@ void dae::GameObject::LateUpdate()
 {
 	for (auto& it : m_pComponents) {
 		if (it.second != nullptr && it.second->IsMarkedForDeletion()) {
-			delete it.second;
-			it.second = nullptr;
+			it.second.reset();
+			//it.second = nullptr;
 		}
 	}
 }

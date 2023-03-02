@@ -48,6 +48,7 @@ void dae::Scene::LateUpdate()
 		object->LateUpdate();
 		if (object->IsMarkedForDeletion()) {
 			Remove(object);
+			object.reset();
 		}
 	}
 }
