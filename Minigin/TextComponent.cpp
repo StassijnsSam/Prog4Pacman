@@ -66,3 +66,13 @@ void TextComponent::SetText(const std::string& text)
 	m_Text = text;
 	m_NeedsUpdate = true;
 }
+
+void TextComponent::SetColor(const SDL_Color& color)
+{
+	m_Color = color;
+}
+
+void TextComponent::SetFont(std::shared_ptr<dae::Font> font)
+{
+	m_pFont = font;
+}

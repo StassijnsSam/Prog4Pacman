@@ -27,13 +27,15 @@ public:
 	virtual void Recieve(int message) const override;
 
 	void SetText(const std::string& text);
+	void SetColor(const SDL_Color& color);
+	void SetFont(std::shared_ptr<dae::Font> font);
 
 private:
 	bool m_NeedsUpdate{ false };
 	std::string m_Text{};
 	std::shared_ptr<dae::Font> m_pFont{};
 	//default color white
-	SDL_Color m_Color{1, 1, 1};
+	SDL_Color m_Color{255, 255, 255};
 
 	RenderComponent* m_pRenderComponent{};
 };
