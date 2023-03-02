@@ -8,7 +8,7 @@ namespace dae {
 	{
 	public:
 		Transform(GameObject* pOwner);
-		Transform(GameObject* pOwner, const glm::vec2& origin, float rot = 0);
+		Transform(GameObject* pOwner, const glm::vec2& origin, float rot = 0.f, float size = 1.f);
 		virtual ~Transform() = default;
 
 		Transform(const Transform& other) = delete;
@@ -21,17 +21,27 @@ namespace dae {
 		virtual void Render() const override;
 		virtual void Recieve(int message) const override;
 
-		const glm::vec2& GetPosition() const;
-		void SetPosition(float x, float y);
-		void SetPosition(glm::vec2& pos);
+		const glm::vec2& GetWorldPosition();
+		void UpdateWorldPosition();
+		const glm::vec2& GetLocaPosition() const;
+		void SetWorldPosition(float x, float y);
+		void SetWorldPosition(const glm::vec2& pos);
+		void SetLocalPosition(float x, float y);
+		void SetLocalPosition(const glm::vec2& pos);
 
 		float GetRotation() const;
 		void SetRotation(float rot);
 
+		void SetDirty();
+
 	private:
 		//Changed to 2D (Pac-man)
-		glm::vec2 m_Position{};
+		glm::vec2 m_WorldPosition{};
+		glm::vec2 m_LocalPosition{};
+		bool m_IsDirty{ false };
+
 		float m_Rotation{};
+		float m_Size{};
 	};
 }
 

@@ -50,7 +50,7 @@ void dae::RenderComponent::Render() const
 		return;
 	}
 
-	const auto& pos = m_pTransform->GetPosition();
+	const auto& pos = m_pTransform->GetWorldPosition();
 	dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 }
 

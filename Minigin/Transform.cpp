@@ -6,8 +6,8 @@ dae::Transform::Transform(GameObject* pOwner)
 {
 }
 
-dae::Transform::Transform(GameObject* pOwner, const glm::vec2& origin, float rot)
-	:BaseComponent(pOwner), m_Position{origin}, m_Rotation{rot}
+dae::Transform::Transform(GameObject* pOwner, const glm::vec2& origin, float rot, float size)
+	:BaseComponent(pOwner), m_LocalPosition{origin}, m_Rotation{rot}, m_Size{size}
 {
 }
 
@@ -17,9 +17,6 @@ void dae::Transform::Initialize()
 
 void dae::Transform::Update()
 {
-	//Empty
-	//	Transform will be update elsewhere based on input or physics
-	//	Got rid of formal parameter (name for gameObject)
 }
 
 void dae::Transform::Render() const
@@ -31,10 +28,39 @@ void dae::Transform::Recieve(int) const
 {
 }
 
-const glm::vec2& dae::Transform::GetPosition() const
+const glm::vec2& dae::Transform::GetWorldPosition()
 {
-	return m_Position;
+	if (m_IsDirty) {
+		UpdateWorldPosition();
+	}
+	return m_WorldPosition;
 }
+
+void dae::Transform::UpdateWorldPosition()
+{
+	if (m_pOwner == nullptr) {
+		//Owner not set correctly
+		return;
+	}
+
+	auto pParent = m_pOwner->GetParent();
+	auto parentTransform = pParent->GetComponent<Transform>();
+	if (pParent == nullptr) {
+		m_WorldPosition = m_LocalPosition;
+	}
+	else {
+		if (parentTransform != nullptr) {
+			m_WorldPosition = parentTransform->GetWorldPosition() + m_LocalPosition;
+		}
+	}
+	m_IsDirty = false;
+}
+
+const glm::vec2& dae::Transform::GetLocaPosition() const
+{
+	return m_LocalPosition;
+}
+
 
 float dae::Transform::GetRotation() const
 {
@@ -46,13 +72,29 @@ void dae::Transform::SetRotation(float rot)
 	m_Rotation = rot;
 }
 
-void dae::Transform::SetPosition(const float x, const float y)
+void dae::Transform::SetDirty()
 {
-	m_Position.x = x;
-	m_Position.y = y;
+	m_IsDirty = true;
 }
 
-void dae::Transform::SetPosition(glm::vec2& pos)
+void dae::Transform::SetWorldPosition(const float x, const float y)
 {
-	SetPosition(pos.x, pos.y);
+	m_WorldPosition.x = x;
+	m_WorldPosition.y = y;
+}
+
+void dae::Transform::SetWorldPosition(const glm::vec2& pos)
+{
+	SetWorldPosition(pos.x, pos.y);
+}
+
+void dae::Transform::SetLocalPosition(const float x, const float y)
+{
+	m_WorldPosition.x = x;
+	m_WorldPosition.y = y;
+}
+
+void dae::Transform::SetLocalPosition(const glm::vec2& pos)
+{
+	SetLocalPosition(pos.x, pos.y);
 }

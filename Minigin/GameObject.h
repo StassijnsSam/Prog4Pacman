@@ -85,8 +85,10 @@ namespace dae {
 		void MarkForDeletion();
 
 		//Children
-		void SetParent(GameObject* pParent);
+		void SetParent(GameObject* pParent, bool keepWorldPosition);
+		const GameObject* GetParent() const;
 		void RemoveParent();
+		const std::vector<GameObject*>& GetChildren();
 
 	private:
 		//ID system for gameObjects?
