@@ -77,14 +77,25 @@ namespace dae {
 			return m_pComponents.contains(typeIndex);
 		}
 
+		//Messages
 		void Send(int message);
 
+		//Deletion
 		bool IsMarkedForDeletion() { return m_IsMarkedForDeletion; }
 		void MarkForDeletion();
+
+		//Children
+		void SetParent(GameObject* pParent);
 
 	private:
 		//ID system for gameObjects?
 		bool m_IsMarkedForDeletion{ false };
 		std::unordered_map<std::type_index, std::shared_ptr<BaseComponent>> m_pComponents{};
+
+		//Parent and children
+		void RemoveChild(GameObject* pChild);
+		void AddChild(GameObject* pChild);
+		GameObject* m_pParent{ nullptr };
+		std::vector<GameObject*> m_pChildren{};
 	};
 }

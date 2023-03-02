@@ -63,3 +63,36 @@ void dae::GameObject::MarkForDeletion()
 	}
 }
 
+void dae::GameObject::SetParent(GameObject* pParent)
+{
+	//Remove from previous parent (if it exists)
+	if (m_pParent != nullptr) {
+		m_pParent->RemoveChild(this);
+	}
+
+	//Update parent
+	m_pParent = pParent;
+
+	//If parent is set add this as a child
+	if (m_pParent != nullptr) {
+		m_pParent->AddChild(this);
+	}
+}
+
+void dae::GameObject::RemoveChild(GameObject* pChild)
+{
+	auto it = std::find(m_pChildren.begin(), m_pChildren.end(), pChild);
+
+	if (it == m_pChildren.end()) {
+		//Child was not found in the list
+		return;
+	}
+
+	m_pChildren.erase(it);
+}
+
+void dae::GameObject::AddChild(GameObject* pChild)
+{
+	m_pChildren.push_back(pChild);
+}
+
