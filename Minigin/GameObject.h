@@ -19,18 +19,22 @@ public:
 	void LateUpdate();
 	void Render() const;
 
-	template <typename ComponentType> void AddComponent(ComponentType* component) {
+	template <typename ComponentType> ComponentType* AddComponent() {
 		//Check if it already has a component of this type
 		if (HasComponent<ComponentType>()) {
 			//2 options
 			//	Throw an error
 			//	Delete the old component and add the new one (need to LOG!)
-			return;
+			return nullptr;
 		}
 			
 		const std::type_index typeIndex = std::type_index(typeid(ComponentType));
+		//Make a new component of this type and instantly set the owner
+		ComponentType* component = new ComponentType(this);
 
 		m_pComponents.emplace(typeIndex, component);
+
+		return component;
 	};
 
 	template <typename ComponentType> ComponentType* GetComponent() const {
@@ -42,7 +46,7 @@ public:
 
 		const std::type_index typeIndex = std::type_index(typeid(ComponentType));
 
-		ComponentType* component = m_pComponents.at(typeIndex);
+		ComponentType* component = dynamic_cast<ComponentType*>(m_pComponents.at(typeIndex));
 
 		return component;
 	};
@@ -65,7 +69,7 @@ public:
 		return true;
 	};
 
-	template <typename ComponentType> bool HasComponent() {
+	template <typename ComponentType> bool HasComponent() const {
 		const std::type_index typeIndex = std::type_index(typeid(ComponentType));
 
 		return m_pComponents.contains(typeIndex);

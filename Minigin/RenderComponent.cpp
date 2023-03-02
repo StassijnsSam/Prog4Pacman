@@ -8,7 +8,18 @@
 RenderComponent::RenderComponent(GameObject* pOwner)
 	:BaseComponent(pOwner)
 {
-	//m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
+	if (pOwner != nullptr) {
+		auto transform = pOwner->GetComponent<Transform>();
+		if (transform != nullptr) {
+			m_pTransform = transform;
+		}
+		else {
+			//transform not found
+		}
+	}
+	else {
+		//owner not set
+	}
 }
 
 void RenderComponent::Update(GameObject&)
