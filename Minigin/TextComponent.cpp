@@ -7,6 +7,11 @@
 
 
 
+TextComponent::TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color)
+	:BaseComponent(pOwner), m_pFont{font}, m_Color{color}, m_Text{text}
+{
+}
+
 TextComponent::TextComponent(GameObject* pOwner)
 	:BaseComponent(pOwner)
 {

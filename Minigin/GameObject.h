@@ -20,7 +20,7 @@ public:
 	void LateUpdate();
 	void Render() const;
 
-	template <typename ComponentType> ComponentType* AddComponent() {
+	template <typename ComponentType, typename... Args> ComponentType* AddComponent(Args&&... args) {
 		//Check if it already has a component of this type
 		if (HasComponent<ComponentType>()) {
 			//2 options
@@ -31,7 +31,7 @@ public:
 			
 		const std::type_index typeIndex = std::type_index(typeid(ComponentType));
 		//Make a new component of this type and instantly set the owner
-		ComponentType* component = new ComponentType(this);
+		ComponentType* component = new ComponentType(this, std::forward<Args>(args)...);
 
 		m_pComponents.emplace(typeIndex, component);
 

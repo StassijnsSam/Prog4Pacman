@@ -12,7 +12,7 @@ class RenderComponent;
 class TextComponent final : public BaseComponent
 {
 public:
-	//TextComponent(const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color, RenderComponent* pRenderComponent);
+	TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color={255, 255, 255});
 	TextComponent(GameObject* pOwner);
 	virtual ~TextComponent() = default;
 
@@ -31,7 +31,7 @@ public:
 	void SetFont(std::shared_ptr<dae::Font> font);
 
 private:
-	bool m_NeedsUpdate{ false };
+	bool m_NeedsUpdate{ true };
 	std::string m_Text{};
 	std::shared_ptr<dae::Font> m_pFont{};
 	//default color white

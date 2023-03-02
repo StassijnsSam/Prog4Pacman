@@ -12,6 +12,7 @@ class RenderComponent final : public BaseComponent
 {
 public:
 	RenderComponent(GameObject* pOwner);
+	RenderComponent(GameObject* pOwner, const std::string& filename);
 	virtual ~RenderComponent() = default;
 
 	RenderComponent(const RenderComponent& other) = delete;

@@ -6,7 +6,7 @@ class Transform final : public BaseComponent
 {
 public:
 	Transform(GameObject* pOwner);
-	//Transform(glm::vec2& origin, float rot = 0);
+	Transform(GameObject* pOwner, const glm::vec2& origin, float rot = 0);
 	virtual ~Transform() = default;
 
 	Transform(const Transform& other) = delete;

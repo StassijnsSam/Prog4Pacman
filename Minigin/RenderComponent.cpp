@@ -10,6 +10,12 @@ RenderComponent::RenderComponent(GameObject* pOwner)
 {
 }
 
+RenderComponent::RenderComponent(GameObject* pOwner, const std::string& filename)
+	:BaseComponent(pOwner)
+{
+	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
+}
+
 void RenderComponent::Initialize()
 {
 	if (m_pOwner == nullptr){
@@ -24,7 +30,6 @@ void RenderComponent::Initialize()
 	}
 
 	m_pTransform = transform;
-
 }
 
 void RenderComponent::Update(GameObject&)

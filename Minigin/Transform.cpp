@@ -1,14 +1,13 @@
 #include "Transform.h"
 #include "GameObject.h"
 
-//Transform::Transform(glm::vec2& origin, float rot)
-//{
-//	m_Position = origin;
-//	m_Rotation = rot;
-//}
-
 Transform::Transform(GameObject* pOwner)
 	:BaseComponent(pOwner)
+{
+}
+
+Transform::Transform(GameObject* pOwner, const glm::vec2& origin, float rot)
+	:BaseComponent(pOwner), m_Position{origin}, m_Rotation{rot}
 {
 }
 
