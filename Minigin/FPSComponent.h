@@ -7,7 +7,7 @@ class FPSComponent final : public BaseComponent
 {
 public:
 
-	FPSComponent(TextComponent* text);
+	FPSComponent(GameObject* pOwner);
 	virtual ~FPSComponent() = default;
 
 	FPSComponent(const FPSComponent& other) = delete;
@@ -24,6 +24,6 @@ private:
 	float m_CurrTime{ 0.0f };
 	int m_FrameAmount{ 0 };
 
-	TextComponent* m_pTextComponent;
+	TextComponent* m_pTextComponent{ nullptr };
 };
 

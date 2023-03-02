@@ -11,7 +11,7 @@ class Transform;
 class RenderComponent final : public BaseComponent
 {
 public:
-	RenderComponent(const std::string& filename, Transform* pTransform);
+	RenderComponent(GameObject* pOwner);
 	virtual ~RenderComponent() = default;
 
 	RenderComponent(const RenderComponent& other) = delete;
@@ -27,7 +27,7 @@ public:
 	void SetTexture(std::shared_ptr<dae::Texture2D> pTexture);
 private:
 
-	std::shared_ptr<dae::Texture2D> m_pTexture;
-	Transform* m_pTransform;
+	std::shared_ptr<dae::Texture2D> m_pTexture{nullptr};
+	Transform* m_pTransform{nullptr};
 };
 

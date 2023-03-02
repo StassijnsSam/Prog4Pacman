@@ -4,8 +4,8 @@
 #include "GameObject.h"
 #include "Time.h"
 
-FPSComponent::FPSComponent(TextComponent* text)
-	: m_pTextComponent(text)
+FPSComponent::FPSComponent(GameObject* pOwner)
+	: BaseComponent(pOwner)
 {
 }
 

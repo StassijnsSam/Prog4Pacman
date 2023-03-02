@@ -12,7 +12,8 @@ class RenderComponent;
 class TextComponent final : public BaseComponent
 {
 public:
-	TextComponent(const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color, RenderComponent* pRenderComponent);
+	//TextComponent(const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color, RenderComponent* pRenderComponent);
+	TextComponent(GameObject* pOwner);
 	virtual ~TextComponent() = default;
 
 	TextComponent(const TextComponent& other) = delete;

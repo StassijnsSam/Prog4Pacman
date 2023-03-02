@@ -5,7 +5,7 @@ class GameObject;
 class BaseComponent
 {
 public:
-	BaseComponent() = default;
+	BaseComponent(GameObject* pOwner) : m_pOwner{ pOwner } {};
 	virtual ~BaseComponent() = default;
 
 	BaseComponent(const BaseComponent& other) = delete;

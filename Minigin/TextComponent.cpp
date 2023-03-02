@@ -7,8 +7,8 @@
 
 
 
-TextComponent::TextComponent(const std::string& text, std::shared_ptr<dae::Font> font, SDL_Color color, RenderComponent* pRenderComponent)
-	: m_Text(text), m_pFont(font), m_Color(color), m_pRenderComponent(pRenderComponent), m_NeedsUpdate(true)
+TextComponent::TextComponent(GameObject* pOwner)
+	:BaseComponent(pOwner)
 {
 }
 

@@ -102,6 +102,8 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 		doContinue = input.ProcessInput();
 		
+		//No need for Physics/Animations (yet)
+
 		/*while (lag >= timeStep) {
 			sceneManager.FixedUpdate();
 			Time::GetInstance().Update(timeStep);
