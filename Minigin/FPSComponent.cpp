@@ -41,7 +41,7 @@ void dae::FPSComponent::Update()
 		m_FrameAmount++;
 	}
 	else {
-		float FPS = m_FrameAmount / m_MinTime;
+		float FPS = m_FrameAmount / m_CurrTime;
 		int FPSInt = static_cast<int>(FPS);
 
 		m_pTextComponent->SetText(std::to_string(FPSInt) + " FPS");
