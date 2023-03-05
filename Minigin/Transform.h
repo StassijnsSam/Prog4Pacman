@@ -31,6 +31,7 @@ namespace dae {
 
 		float GetRotation() const;
 		void SetRotation(float rot);
+		void AddRotation(float rot);
 
 		void SetDirty();
 
