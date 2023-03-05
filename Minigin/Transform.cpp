@@ -43,17 +43,19 @@ void dae::Transform::UpdateWorldPosition()
 		return;
 	}
 
+	m_IsDirty = false;
+
 	auto pParent = m_pOwner->GetParent();
-	auto parentTransform = pParent->GetComponent<Transform>();
 	if (pParent == nullptr) {
 		m_WorldPosition = m_LocalPosition;
+		return;
 	}
-	else {
-		if (parentTransform != nullptr) {
-			m_WorldPosition = parentTransform->GetWorldPosition() + m_LocalPosition;
-		}
+
+	auto parentTransform = pParent->GetComponent<Transform>();
+	
+	if (parentTransform != nullptr) {
+		m_WorldPosition = parentTransform->GetWorldPosition() + m_LocalPosition;
 	}
-	m_IsDirty = false;
 }
 
 const glm::vec2& dae::Transform::GetLocaPosition() const
@@ -84,28 +86,46 @@ void dae::Transform::AddRotation(float rot)
 void dae::Transform::SetDirty()
 {
 	m_IsDirty = true;
+
+	if (m_pOwner == nullptr) {
+		//Owner is not set correctly
+		return;
+	}
+
+	auto children = GetOwner()->GetChildren();
+	for (auto child : children)
+	{
+		auto childTransform = child->GetComponent<Transform>();
+		if (childTransform == nullptr) {
+			continue;
+		}
+
+		childTransform->SetDirty();
+	}
 }
 
 void dae::Transform::SetWorldPosition(const float x, const float y)
 {
 	m_WorldPosition.x = x;
 	m_WorldPosition.y = y;
+	SetDirty();
 }
 
 void dae::Transform::SetWorldPosition(const glm::vec2& pos)
 {
 	SetWorldPosition(pos.x, pos.y);
+	SetDirty();
 }
 
 void dae::Transform::SetLocalPosition(const float x, const float y)
 {
-	m_WorldPosition.x = x;
-	m_WorldPosition.y = y;
-	m_IsDirty = true;
+	m_LocalPosition.x = x;
+	m_LocalPosition.y = y;
+	SetDirty();
 }
 
 void dae::Transform::SetLocalPosition(const glm::vec2& pos)
 {
 	SetLocalPosition(pos.x, pos.y);
-	m_IsDirty = true;
+	SetDirty();
 }

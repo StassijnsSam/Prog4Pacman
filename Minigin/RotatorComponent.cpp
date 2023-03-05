@@ -28,7 +28,7 @@ void dae::RotatorComponent::Initialize()
 	}
 
 	m_pTransform = transform;
-	m_Center = transform->GetWorldPosition();
+	m_Center = transform->GetLocaPosition();
 }
 
 void dae::RotatorComponent::Update()
@@ -48,7 +48,7 @@ void dae::RotatorComponent::Update()
 
 	glm::vec2 newPosition = m_Center + m_Radius* glm::vec2{ cosf(angleRadians), sinf(angleRadians)};
 
-	m_pTransform->SetWorldPosition(newPosition);
+	m_pTransform->SetLocalPosition(newPosition);
 }
 
 void dae::RotatorComponent::Render() const
