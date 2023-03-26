@@ -1,7 +1,5 @@
 #include <SDL.h>
 #include "InputManager.h"
-#include <windows.h>
-#include "xInput.h"
 
 bool dae::InputManager::ProcessInput()
 {
@@ -20,4 +18,10 @@ bool dae::InputManager::ProcessInput()
 	}
 
 	return true;
+}
+
+void dae::InputManager::CreateController(int controllerIndex)
+{
+	//Put controller at the place of its index?
+	m_pControllers.push_back(std::move(std::make_unique<XBoxController>(controllerIndex)));
 }
