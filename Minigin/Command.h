@@ -11,7 +11,7 @@ namespace dae {
 
 		virtual void Execute() = 0;
 
-	private:
+	protected:
 		GameObject* m_pGameObject{};
 	};
 }
