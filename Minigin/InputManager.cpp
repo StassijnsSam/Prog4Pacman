@@ -74,8 +74,13 @@ void dae::InputManager::UpdateKeyboardInput(SDL_Event e)
 			break;
 
 		case SDL_KEYDOWN:
-			if (command.first.first == ButtonState::Down)
+			//Need repeat so it is only on press and not on hold
+			if (command.first.first == ButtonState::Down && e.key.repeat == 0)
 			{
+				command.second.get()->Execute();
+			}
+
+			if (command.first.first == ButtonState::Hold && e.key.repeat != 0) {
 				command.second.get()->Execute();
 			}
 			break;
