@@ -28,6 +28,7 @@ namespace dae {
 		void SetWorldPosition(const glm::vec2& pos);
 		void SetLocalPosition(float x, float y);
 		void SetLocalPosition(const glm::vec2& pos);
+		void AddLocalPosition(const glm::vec2& pos);
 
 		float GetRotation() const;
 		void SetRotation(float rot);

@@ -129,3 +129,10 @@ void dae::Transform::SetLocalPosition(const glm::vec2& pos)
 	SetLocalPosition(pos.x, pos.y);
 	SetDirty();
 }
+
+void dae::Transform::AddLocalPosition(const glm::vec2& pos)
+{
+	SetDirty();
+
+	m_LocalPosition += pos;
+}
