@@ -10,7 +10,7 @@ namespace dae {
 	class GameObject final {
 	public:
 		GameObject() = default;
-		~GameObject() = default;
+		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
@@ -85,10 +85,10 @@ namespace dae {
 		void MarkForDeletion();
 
 		//Children
-		void SetParent(GameObject* pParent, bool keepWorldPosition);
-		const GameObject* GetParent() const;
-		void RemoveParent();
-		const std::vector<GameObject*>& GetChildren();
+		GameObject* GetParent();
+		const std::vector<std::unique_ptr<GameObject>>& GetChildren();
+		void AddChild(std::unique_ptr<GameObject> pChild, bool keepWorldPosition);
+		void RemoveChild(std::unique_ptr<GameObject> pChild);
 
 	private:
 		//ID system for gameObjects?
@@ -96,9 +96,10 @@ namespace dae {
 		std::unordered_map<std::type_index, std::unique_ptr<BaseComponent>> m_pComponents{};
 
 		//Parent and children
-		void RemoveChild(GameObject* pChild);
-		void AddChild(GameObject* pChild);
+		void SetParent(GameObject* pParent);
+		void RemoveChildFromList(std::unique_ptr<GameObject> pChild);
+		void AddChildToList(std::unique_ptr<GameObject>&& pChild);
 		GameObject* m_pParent{ nullptr };
-		std::vector<GameObject*> m_pChildren{};
+		std::vector<std::unique_ptr<GameObject>> m_pChildren{};
 	};
 }
