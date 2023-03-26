@@ -1,6 +1,6 @@
 #include "XboxController.h"
-#include <Xinput.h>
 #include <windows.h>
+#include <Xinput.h>
 
 class dae::XBoxController::XBoxControllerImpl {
 public:
