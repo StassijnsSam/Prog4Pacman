@@ -24,7 +24,7 @@ dae::RightCommand::RightCommand(GameObject* pGameObject)
 
 void dae::UpCommand::Execute()
 {
-	float movementSpeed = 50.f;
+	float movementSpeed = 500.f;
 
 	auto pTransform = m_pGameObject->GetComponent<Transform>();
 
@@ -40,7 +40,7 @@ void dae::UpCommand::Execute()
 
 void dae::DownCommand::Execute()
 {
-	float movementSpeed = 50.f;
+	float movementSpeed = 500.f;
 
 	auto pTransform = m_pGameObject->GetComponent<Transform>();
 
@@ -56,7 +56,7 @@ void dae::DownCommand::Execute()
 
 void dae::LeftCommand::Execute()
 {
-	float movementSpeed = 50.f;
+	float movementSpeed = 500.f;
 
 	auto pTransform = m_pGameObject->GetComponent<Transform>();
 
@@ -72,7 +72,7 @@ void dae::LeftCommand::Execute()
 
 void dae::RightCommand::Execute()
 {
-	float movementSpeed = 50.f;
+	float movementSpeed = 500.f;
 
 	auto pTransform = m_pGameObject->GetComponent<Transform>();
 
