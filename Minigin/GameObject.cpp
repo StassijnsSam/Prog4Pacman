@@ -4,13 +4,6 @@
 #include "Renderer.h"
 #include "BaseComponent.h"
 
-dae::GameObject::~GameObject()
-{
-	//Clear the components vector and children vector
-	m_pComponents.clear();
-	m_pChildren.clear();
-}
-
 void dae::GameObject::Initialize()
 {
 	for (auto& it : m_pComponents) {
@@ -70,22 +63,10 @@ void dae::GameObject::MarkForDeletion()
 	}
 }
 
-dae::GameObject* dae::GameObject::GetParent()
-{
-	return m_pParent;
-}
-
-const std::vector<std::unique_ptr<dae::GameObject>>& dae::GameObject::GetChildren()
-{
-	return m_pChildren;
-}
-
-void dae::GameObject::AddChild(std::unique_ptr<GameObject> pChild, bool keepWorldPosition)
+void dae::GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 {
 	auto transform = GetComponent<Transform>();
-	auto pParent = pChild.get()->GetParent();
-
-	if (pParent == nullptr) {
+	if (m_pParent == nullptr) {
 		if (transform) {
 			transform->SetLocalPosition(transform->GetWorldPosition());
 		}
@@ -101,31 +82,37 @@ void dae::GameObject::AddChild(std::unique_ptr<GameObject> pChild, bool keepWorl
 			transform->SetDirty();
 		}
 	}
-
+	
 	//Remove from previous parent (if it exists)
-	if (pParent != nullptr) {
-		pParent->RemoveChildFromList(std::move(pChild));
+	if (m_pParent != nullptr) {
+		m_pParent->RemoveChild(this);
 	}
 
 	//Update parent
-	pChild.get()->SetParent(this);
+	m_pParent = pParent;
 
 	//If parent is set add this as a child
-	AddChildToList(std::move(pChild));
-
+	if (m_pParent != nullptr) {
+		m_pParent->AddChild(this);
+	}
 }
 
-void dae::GameObject::RemoveChild(std::unique_ptr<GameObject> pChild)
+const dae::GameObject* dae::GameObject::GetParent() const
 {
-	RemoveChildFromList(std::move(pChild));
+	return m_pParent;
 }
 
-void dae::GameObject::SetParent(GameObject* pParent)
+void dae::GameObject::RemoveParent()
 {
-	m_pParent = pParent;
+	SetParent(nullptr, true);
 }
 
-void dae::GameObject::RemoveChildFromList(std::unique_ptr<GameObject> pChild)
+const std::vector<dae::GameObject*>& dae::GameObject::GetChildren()
+{
+	return m_pChildren;
+}
+
+void dae::GameObject::RemoveChild(GameObject* pChild)
 {
 	auto it = std::find(m_pChildren.begin(), m_pChildren.end(), pChild);
 
@@ -137,7 +124,7 @@ void dae::GameObject::RemoveChildFromList(std::unique_ptr<GameObject> pChild)
 	m_pChildren.erase(it);
 }
 
-void dae::GameObject::AddChildToList(std::unique_ptr<GameObject>&& pChild)
+void dae::GameObject::AddChild(GameObject* pChild)
 {
 	m_pChildren.push_back(pChild);
 }
