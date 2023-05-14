@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ISound.h";
+#include "ISound.h"
 
 namespace dae {
 	class NullSoundService final : public ISound
@@ -10,7 +10,7 @@ namespace dae {
 		virtual ~NullSoundService() = default;
 
 		virtual void Play(int soundID, const float volume) override;
-		virtual void Stop(int soundID) ;
+		virtual void Stop(int soundID);
 	};
 }
 
