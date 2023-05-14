@@ -5,8 +5,8 @@ namespace dae {
 	public:
 		virtual ~ISound() = default;
 
-		virtual void Play(int soundID, const float volume) = 0;
-		virtual void Stop(int soundID) = 0;
+		virtual void Play(const std::string& soundName, const float volume) = 0;
+		virtual void Stop() = 0;
 	};
 }
 

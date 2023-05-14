@@ -1,9 +1,9 @@
 #include "NullSoundService.h"
 
-void dae::NullSoundService::Play(int /*soundID*/, const float /*volume*/)
+void dae::NullSoundService::Play(const std::string& /*soundName*/, const float /*volume*/)
 {
 }
 
-void dae::NullSoundService::Stop(int /*soundID*/)
+void dae::NullSoundService::Stop()
 {
 }
