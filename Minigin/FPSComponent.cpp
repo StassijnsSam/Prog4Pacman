@@ -2,7 +2,7 @@
 
 #include "TextComponent.h"
 #include "GameObject.h"
-#include "Time.h"
+#include "Timetracker.h"
 
 dae::FPSComponent::FPSComponent(GameObject* pOwner)
 	: BaseComponent(pOwner)

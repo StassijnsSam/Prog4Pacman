@@ -1,6 +1,6 @@
 #include "MovementComponent.h"
 #include "GameObject.h"
-#include "Time.h"
+#include "Timetracker.h"
 
 dae::MovementComponent::MovementComponent(GameObject* pOwner)
 	:BaseComponent(pOwner)
