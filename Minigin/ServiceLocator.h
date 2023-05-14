@@ -16,12 +16,14 @@ namespace dae {
         static void Provide(ISound* pSoundService);
         static ISound* GetSoundService();
 
+        static void DestroySoundService();
+
     private:
         ServiceLocator() = default;
         ~ServiceLocator() = default;
 
         static ISound* m_pSoundService;
-        static NullSoundService* m_pNullSoundService;
+        static NullSoundService m_pNullSoundService;
 	};
 }
 
