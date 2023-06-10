@@ -19,6 +19,14 @@ namespace dae
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
+		InputManager() = default;
+		~InputManager() = default;
+
+		InputManager(const InputManager& other) = delete;
+		InputManager(InputManager&& other) = delete;
+		InputManager& operator=(const InputManager& other) = delete;
+		InputManager& operator=(InputManager&& other) = delete;
+		
 		bool ProcessInput();
 
 		template<typename T>
@@ -28,6 +36,7 @@ namespace dae
 		void CreateKeyboardCommand(ButtonState state, int button, GameObject* pGameobject);
 
 		void CreateController(int controllerIndex);
+		XBoxController* GetController(int controllerIndex) const;
 
 	private:
 		using ControllerKey = std::pair<ButtonState, XBoxController::ControllerButton>;

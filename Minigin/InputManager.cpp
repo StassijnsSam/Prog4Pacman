@@ -25,6 +25,11 @@ void dae::InputManager::CreateController(int controllerIndex)
 	m_pControllers.push_back(std::move(std::make_unique<XBoxController>(controllerIndex)));
 }
 
+dae::XBoxController* dae::InputManager::GetController(int controllerIndex) const
+{
+	return m_pControllers.at(controllerIndex).get();
+}
+
 void dae::InputManager::UpdateConsoleInput()
 {
 	for (const auto& pController : m_pControllers) {
