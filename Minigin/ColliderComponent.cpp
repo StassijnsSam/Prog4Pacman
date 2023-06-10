@@ -26,6 +26,6 @@ void dae::ColliderComponent::Render() const
 {
 }
 
-void dae::ColliderComponent::Recieve(int message) const
+void dae::ColliderComponent::Recieve(int) const
 {
 }

@@ -19,11 +19,11 @@ void ScoreComponent::Render() const
 {
 }
 
-void ScoreComponent::Recieve(int message) const
+void ScoreComponent::Recieve(int) const
 {
 }
 
-void ScoreComponent::Notify(const dae::GameObject* actor, int event)
+void ScoreComponent::Notify(const dae::GameObject*, int event)
 {
 	switch (event)
 	{
