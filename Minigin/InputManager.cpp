@@ -29,6 +29,18 @@ void dae::InputManager::ClearConsoleCommands()
 	m_ConsoleCommands.clear();
 }
 
+void dae::InputManager::CreateConsoleCommand(ButtonState state, XBoxController::ControllerButton button, std::unique_ptr<Command> command)
+{
+	ControllerKey key = std::pair{ state, button };
+	m_ConsoleCommands.insert(std::pair{ key, std::move(command) });
+}
+
+void dae::InputManager::CreateKeyboardCommand(ButtonState state, SDL_Scancode button, std::unique_ptr<Command> command)
+{
+	KeyboardKey key = std::pair{ state, button };
+	m_KeyboardCommands.insert(std::pair{ key, std::move(command) });
+}
+
 int dae::InputManager::CreateController()
 {
 	int controllerIndex =  static_cast<int>(m_pControllers.size()) - 1;

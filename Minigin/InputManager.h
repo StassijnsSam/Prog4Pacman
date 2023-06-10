@@ -33,11 +33,9 @@ namespace dae
 		void ClearKeyboardCommands();
 		void ClearConsoleCommands();
 
-		template<typename T>
-		void CreateConsoleCommand(ButtonState state, XBoxController::ControllerButton button);
+		void CreateConsoleCommand(ButtonState state, XBoxController::ControllerButton button, std::unique_ptr<Command> command);
 
-		template<typename T>
-		void CreateKeyboardCommand(ButtonState state, SDL_Scancode button);
+		void CreateKeyboardCommand(ButtonState state, SDL_Scancode button, std::unique_ptr<Command> command);
 
 		int CreateController();
 		XBoxController* GetController(int controllerIndex) const;
@@ -61,21 +59,4 @@ namespace dae
 		void UpdateConsoleInput();
 		void UpdateKeyboardInput();
 	};
-
-	template<typename CommandType>
-	void InputManager::CreateConsoleCommand(ButtonState state, XBoxController::ControllerButton button)
-	{
-		std::unique_ptr<CommandType> command = std::make_unique<CommandType>();
-		ControllerKey key = std::pair{state, button};
-		m_ConsoleCommands.insert(std::pair{ key, std::move(command)});
-	}
-
-	template<typename CommandType>
-	void InputManager::CreateKeyboardCommand(ButtonState state, SDL_Scancode button)
-	{
-		std::unique_ptr<CommandType> command = std::make_unique<CommandType>();
-		KeyboardKey key = std::pair{ state, button };
-		m_KeyboardCommands.insert(std::pair{ key, std::move(command) });
-	}
-
 }
