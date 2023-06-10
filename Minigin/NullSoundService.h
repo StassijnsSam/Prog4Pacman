@@ -10,7 +10,7 @@ namespace dae {
 		NullSoundService() = default;
 		virtual ~NullSoundService() = default;
 
-		virtual void Play(const std::string& soundName, const float volume) override;
+		virtual void Play(const std::string& soundName, const int volume) override;
 		virtual void Stop() override;
 	};
 }

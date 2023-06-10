@@ -16,7 +16,7 @@ namespace dae {
         // Thread for processing sound requests
         std::thread soundThread = std::thread(&SoundSystem::SoundSystemImpl::soundThreadFunction, this);
 
-        void Play(const std::string& soundName, const float volume){
+        void Play(const std::string& soundName, const int volume){
             //Create sound
             std::string soundPath = ResourceManager::GetInstance().GetFullSoundPath(soundName);
             Mix_Chunk* sound = Mix_LoadWAV(soundPath.c_str());
@@ -53,7 +53,7 @@ namespace dae {
         struct SoundRequest
         {
             Mix_Chunk* sound;
-            float volume;
+            int volume;
         };
 
         // Event queue
@@ -84,7 +84,7 @@ dae::SoundSystem::~SoundSystem()
 {
 }
 
-void dae::SoundSystem::Play(const std::string& soundName, const float volume)
+void dae::SoundSystem::Play(const std::string& soundName, const int volume)
 {
     pImpl->Play(soundName, volume);
 }
