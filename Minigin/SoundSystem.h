@@ -12,7 +12,7 @@ namespace dae {
 
 	public:
 		SoundSystem();
-		virtual ~SoundSystem() override;
+		virtual ~SoundSystem() = default;
 
 		virtual void Play(const std::string& soundName, const int volume) override;
 		virtual void Stop() override;

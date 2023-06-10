@@ -6,6 +6,8 @@
 #include <vector>
 #include "ResourceManager.h"
 #include <SDL_mixer.h>
+#include <iostream>
+#include <unordered_map>
 
 namespace dae {
 	class SoundSystem::SoundSystemImpl : public ISound{
@@ -13,22 +15,15 @@ namespace dae {
 		SoundSystemImpl();
         ~SoundSystemImpl();
 
-        // Thread for processing sound requests
-        std::thread soundThread = std::thread(&SoundSystem::SoundSystemImpl::soundThreadFunction, this);
-
         void Play(const std::string& soundName, const int volume){
-            //Create sound
-            std::string soundPath = ResourceManager::GetInstance().GetFullSoundPath(soundName);
-            Mix_Chunk* sound = Mix_LoadWAV(soundPath.c_str());
-
             //Put it on the eventQueue
             std::unique_lock<std::mutex> lock(eventQueueMutex);
-            eventQueue.push(SoundRequest{ sound, volume });
+            eventQueue.push(SoundRequest{ soundName, volume });
             eventQueueNotEmpty.notify_one();
         };
 
-        void soundThreadFunction() {
-            while (true) {
+        void SoundThreadFunction() {
+            while (m_IsRunning) {
                 // Wait for event queue to have a sound request
                 std::unique_lock<std::mutex> lock(eventQueueMutex);
                 eventQueueNotEmpty.wait(lock, [this]() { return !eventQueue.empty(); });
@@ -38,9 +33,20 @@ namespace dae {
                 eventQueue.pop();
                 lock.unlock();
 
+                Mix_Chunk* pSound;
+                // Check if you have already loaded this sound before
+                if (m_pLoadedSounds.contains(request.soundName)) {
+                    pSound = m_pLoadedSounds.at(request.soundName);
+                }
+                else {
+                    //Create sound
+                    std::string soundPath = ResourceManager::GetInstance().GetFullSoundPath(request.soundName);
+                    pSound = Mix_LoadWAV(soundPath.c_str());
+                }
+
                 // Play sound
-                Mix_VolumeChunk(request.sound, request.volume);
-                Mix_PlayChannel(-1, request.sound, 0);
+                Mix_VolumeChunk(pSound, request.volume);
+                Mix_PlayChannel(-1, pSound, 0);
             }
         }
 
@@ -52,36 +58,57 @@ namespace dae {
     private:
         struct SoundRequest
         {
-            Mix_Chunk* sound;
+            std::string soundName;
             int volume;
+            //bool isLooping;
         };
 
         // Event queue
         std::queue<SoundRequest> eventQueue{};
         std::mutex eventQueueMutex{};
         std::condition_variable eventQueueNotEmpty{};
+
+        // Thread
+        std::jthread m_SoundThread;
+
+        bool m_IsRunning{ true };
+
+        // Already loaded sounds
+        std::unordered_map<std::string, Mix_Chunk*> m_pLoadedSounds{};
 	};
+
     SoundSystem::SoundSystemImpl::SoundSystemImpl()
     {
         // Initialize SDL_mixer
         Mix_Init(MIX_INIT_OGG);
-        Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024);
+        if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+            std::cout << "SDL_mixer initialization failed" << std::endl;
+            return;
+        }
+
+        //Create sound thread
+        m_SoundThread = std::jthread(&SoundSystemImpl::SoundThreadFunction, this);
     }
+
     SoundSystem::SoundSystemImpl::~SoundSystemImpl()
     {
+        m_IsRunning = false;
         // Clean up SDL_mixer
         Mix_CloseAudio();
         Mix_Quit();
+
+        //Clean up the loaded sounds
+        for (auto soundPair : m_pLoadedSounds)
+        {
+            Mix_FreeChunk(soundPair.second);
+            soundPair.second = nullptr;
+        }
     }
 }
 
 dae::SoundSystem::SoundSystem()
 {
     pImpl = std::make_unique<SoundSystemImpl>();
-}
-
-dae::SoundSystem::~SoundSystem()
-{
 }
 
 void dae::SoundSystem::Play(const std::string& soundName, const int volume)
