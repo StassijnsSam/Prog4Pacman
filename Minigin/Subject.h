@@ -12,12 +12,11 @@ namespace dae {
 	class Subject
 	{
 	public:
+		Subject() = default;
 		virtual ~Subject() = default;
 
 		virtual void AddObserver(Observer* pObserver);
 		virtual void RemoveObserver(Observer* pObserver);
-
-	protected:
 		virtual void Notify(GameObject* actor, int event);
 
 	private:

@@ -154,13 +154,13 @@
     <ClCompile Include="LootComponent.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="PacmanComponent.cpp" />
-    <ClCompile Include="ScoreComponent.cpp" />
+    <ClCompile Include="ScoreDisplayComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h" />
     <ClInclude Include="LootComponent.h" />
     <ClInclude Include="PacmanComponent.h" />
-    <ClInclude Include="ScoreComponent.h" />
+    <ClInclude Include="ScoreDisplayComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

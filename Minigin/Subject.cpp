@@ -3,7 +3,7 @@
 
 void dae::Subject::AddObserver(Observer* pObserver)
 {
-	m_pObservers.push_back(pObserver);
+	m_pObservers.emplace_back(pObserver);
 }
 
 void dae::Subject::RemoveObserver(Observer* pObserver)
@@ -14,6 +14,6 @@ void dae::Subject::RemoveObserver(Observer* pObserver)
 void dae::Subject::Notify(GameObject* actor, int event)
 {
 	for (auto pObserver : m_pObservers) {
-		pObserver->Notify(actor, event);
+		pObserver->OnNotify(actor, event);
 	}
 }

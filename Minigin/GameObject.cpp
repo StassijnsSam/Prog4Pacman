@@ -39,12 +39,14 @@ void dae::GameObject::FixedUpdate()
 
 void dae::GameObject::LateUpdate()
 {
-	for (auto& it : m_pComponents) {
-		if (it.second != nullptr && it.second->IsMarkedForDeletion()) {
-			it.second.reset();
-			//it.second = nullptr;
+	
+	/*for (auto& it : m_pComponents) {
+		if (it.second.get() != nullptr) {
+			if (it.second.get()->IsMarkedForDeletion()) {
+
+			}
 		}
-	}
+	}*/
 }
 
 void dae::GameObject::Render() const

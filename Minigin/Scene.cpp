@@ -52,11 +52,15 @@ void dae::Scene::LateUpdate()
 {
 	for (auto& object : m_objects)
 	{
+		if (object == nullptr) {
+			continue;
+		}
+		
 		//First lateUpdate the object so the component will be removed first
 		object->LateUpdate();
+
 		if (object->IsMarkedForDeletion()) {
 			Remove(object);
-			object.reset();
 		}
 	}
 }

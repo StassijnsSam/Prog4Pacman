@@ -38,7 +38,7 @@ namespace dae {
 
 			m_pComponents.emplace(typeIndex, std::move(component));
 
-			return component.get();
+			return dynamic_cast<ComponentType*>(m_pComponents.at(typeIndex).get());
 		};
 
 		template <typename ComponentType> ComponentType* GetComponent() const {
@@ -97,7 +97,7 @@ namespace dae {
 	private:
 		bool m_IsMarkedForDeletion{ false };
 
-		//Componenets
+		//Components
 		std::unordered_map<std::type_index, std::unique_ptr<BaseComponent>> m_pComponents{};
 		Transform* m_pTransform{};
 

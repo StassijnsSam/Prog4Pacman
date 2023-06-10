@@ -18,7 +18,7 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ScoreComponent.cpp">
+    <ClCompile Include="ScoreDisplayComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PacmanComponent.cpp">
@@ -32,7 +32,7 @@
     <ClInclude Include="Enums.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ScoreComponent.h">
+    <ClInclude Include="ScoreDisplayComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PacmanComponent.h">

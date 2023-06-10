@@ -38,7 +38,6 @@ void dae::CollisionManager::FixedUpdate()
             //If they are colliding trigger the callbacks on both colliders
             if (pCollider->IsColliding(pOtherCollider)) {
                 pCollider->OnCollision(pOtherCollider);
-                pOtherCollider->OnCollision(pCollider);
             }
         }
     }

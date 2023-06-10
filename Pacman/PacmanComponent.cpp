@@ -2,6 +2,7 @@
 #include "CircleColliderComponent.h"
 #include "LootComponent.h"
 #include "Timetracker.h"
+#include "Enums.h"
 
 PacmanComponent::PacmanComponent(dae::GameObject* pGameObject)
 	:BaseComponent(pGameObject)
@@ -42,7 +43,14 @@ void PacmanComponent::Recieve(int) const
 
 void PacmanComponent::AddObserver(dae::Observer* observer)
 {
-	m_PacmanSubject->AddObserver(observer);
+	if (observer) {
+		m_PacmanSubject.get()->AddObserver(observer);
+	}
+}
+
+int PacmanComponent::GetScore()
+{
+	return m_Score;
 }
 
 void PacmanComponent::OnCollision(dae::GameObject* other)
@@ -63,6 +71,7 @@ void PacmanComponent::OnCollision(dae::GameObject* other)
 		m_Score += score;
 
 		//Notify score observer
+		m_PacmanSubject.get()->Notify(this->GetOwner(), EventType::PLAYER_GOT_SCORE);
 	}
 }
 

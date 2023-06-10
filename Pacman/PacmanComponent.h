@@ -23,6 +23,8 @@ public:
 
 	void AddObserver(dae::Observer* observer);
 
+	int GetScore();
+
 private:
 	void OnCollision(dae::GameObject* other);
 
@@ -35,6 +37,6 @@ private:
 	float m_InvincibilityTimer{};
 	float m_MaxInvincibilityTime{ 3.0f };
 
-	std::unique_ptr<dae::Subject> m_PacmanSubject;
+	std::unique_ptr<dae::Subject> m_PacmanSubject{};
 };
 
