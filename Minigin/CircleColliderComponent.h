@@ -15,6 +15,8 @@ namespace dae {
 		CircleColliderComponent(CircleColliderComponent&& other) = delete;
 		CircleColliderComponent& operator=(CircleColliderComponent&& other) = delete;
 
+		virtual bool IsColliding(ColliderComponent* other) override;
+
 	private:
 
 		float m_Radius{};

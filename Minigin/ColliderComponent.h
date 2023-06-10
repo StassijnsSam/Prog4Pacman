@@ -20,8 +20,11 @@ namespace dae {
 		virtual void Render() const override;
 		virtual void Recieve(int message) const override;
 
-		void OnCollision(ColliderComponent* other);
-		void SetCollisionCallback(std::function<void(GameObject* other)> callback) { m_Callback = callback; }
+		virtual void OnCollision(ColliderComponent* other);
+		virtual void SetCollisionCallback(std::function<void(GameObject* other)> callback) { m_Callback = callback; }
+
+		//Make this an abstract class
+		virtual bool IsColliding(ColliderComponent* other) = 0;
 
 	private:
 		std::function<void(GameObject* other)> m_Callback{};
