@@ -224,7 +224,6 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="ISound.cpp" />
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="MoveCommands.cpp" />
     <ClCompile Include="MovementComponent.cpp" />

@@ -3,13 +3,14 @@
 #include "Transform.h"
 #include <unordered_map>
 #include <typeindex>
+#include "Transform.h"
 
 class BaseComponent;
 
 namespace dae {
 	class GameObject final {
 	public:
-		GameObject() = default;
+		GameObject(glm::vec2 position = glm::vec2{});
 		~GameObject() = default;
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
@@ -77,6 +78,8 @@ namespace dae {
 			return m_pComponents.contains(typeIndex);
 		}
 
+		Transform* GetTransform();
+
 		//Messages
 		void Send(int message);
 
@@ -91,9 +94,11 @@ namespace dae {
 		const std::vector<GameObject*>& GetChildren();
 
 	private:
-		//ID system for gameObjects?
 		bool m_IsMarkedForDeletion{ false };
+
+		//Componenets
 		std::unordered_map<std::type_index, std::unique_ptr<BaseComponent>> m_pComponents{};
+		Transform* m_pTransform{};
 
 		//Parent and children
 		void RemoveChild(GameObject* pChild);

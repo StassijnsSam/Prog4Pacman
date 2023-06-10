@@ -20,7 +20,7 @@ void dae::MovementComponent::Initialize()
 		return;
 	}
 
-	auto transform = m_pOwner->GetComponent<Transform>();
+	auto transform = m_pOwner->GetTransform();
 	if (transform == nullptr) {
 		//owner does not have a transform
 		return;

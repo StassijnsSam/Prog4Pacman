@@ -4,6 +4,12 @@
 #include "Renderer.h"
 #include "BaseComponent.h"
 
+dae::GameObject::GameObject(glm::vec2 position)
+{
+	AddComponent<Transform>(position);
+	m_pTransform = GetComponent<Transform>();
+}
+
 void dae::GameObject::Initialize()
 {
 	for (auto& it : m_pComponents) {
@@ -41,6 +47,11 @@ void dae::GameObject::Render() const
 	}
 }
 
+dae::Transform* dae::GameObject::GetTransform()
+{
+	return m_pTransform;
+}
+
 void dae::GameObject::Send(int message)
 {
 	//Send message to all components
@@ -72,21 +83,20 @@ void dae::GameObject::MarkForDeletion()
 
 void dae::GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 {
-	auto transform = GetComponent<Transform>();
 	if (m_pParent == nullptr) {
-		if (transform) {
-			transform->SetLocalPosition(transform->GetWorldPosition());
+		if (m_pTransform) {
+			m_pTransform->SetLocalPosition(m_pTransform->GetWorldPosition());
 		}
 	}
 	else {
 		if (keepWorldPosition) {
-			auto parentTransform = pParent->GetComponent<Transform>();
-			if (transform && parentTransform) {
-				transform->SetLocalPosition(transform->GetLocaPosition() - parentTransform->GetWorldPosition());
+			auto parentTransform = pParent->GetTransform();
+			if (m_pTransform && parentTransform) {
+				m_pTransform->SetLocalPosition(m_pTransform->GetLocaPosition() - parentTransform->GetWorldPosition());
 			}
 		}
-		if (transform) {
-			transform->SetDirty();
+		if (m_pTransform) {
+			m_pTransform->SetDirty();
 		}
 	}
 	

@@ -23,7 +23,7 @@ void dae::RenderComponent::Initialize()
 		return;
 	}
 
-	auto transform = m_pOwner->GetComponent<Transform>();
+	auto transform = m_pOwner->GetTransform();
 	if (transform == nullptr) {
 		//transform component not found
 		return;
