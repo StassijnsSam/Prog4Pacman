@@ -31,6 +31,10 @@ private:
 
 	bool m_IsInvincible{ false };
 
+	void EnableInvincible();
+	float m_InvincibilityTimer{};
+	float m_MaxInvincibilityTime{ 3.0f };
+
 	std::unique_ptr<dae::Subject> m_PacmanSubject;
 };
 
