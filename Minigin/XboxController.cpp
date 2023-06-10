@@ -36,6 +36,10 @@ public:
 	{
 		return m_CurrentState.Gamepad.wButtons & button;
 	}
+
+	int GetControllerIndex() {
+		return m_ControllerIndex;
+	}
 private:
 	XINPUT_STATE m_PreviousState{};
 	XINPUT_STATE m_CurrentState{};
@@ -73,4 +77,9 @@ bool dae::XBoxController::IsUpThisFrame(ControllerButton button)
 bool dae::XBoxController::IsPressed(ControllerButton button)
 {
 	return pImpl->IsPressed(static_cast<unsigned int>(button));
+}
+
+int dae::XBoxController::GetControllerIndex()
+{
+	return pImpl->GetControllerIndex();
 }

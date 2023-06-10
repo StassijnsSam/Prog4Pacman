@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 #include "Command.h"
+#include "Keyboard.h"
 
 namespace dae
 {
@@ -30,12 +31,12 @@ namespace dae
 		bool ProcessInput();
 
 		template<typename T>
-		void CreateConsoleCommand(ButtonState state, XBoxController::ControllerButton button, GameObject* gameobject);
+		void CreateConsoleCommand(ButtonState state, XBoxController::ControllerButton button);
 
 		template<typename T>
-		void CreateKeyboardCommand(ButtonState state, int button, GameObject* pGameobject);
+		void CreateKeyboardCommand(ButtonState state, SDL_Scancode button);
 
-		void CreateController(int controllerIndex);
+		int CreateController();
 		XBoxController* GetController(int controllerIndex) const;
 
 	private:
@@ -44,29 +45,32 @@ namespace dae
 
 		ControllerCommandsMap m_ConsoleCommands{};
 
-		using KeyboardKey = std::pair<ButtonState, int>;
+		using KeyboardKey = std::pair<ButtonState, SDL_Scancode>;
 		using KeyboardCommandsMap = std::map<KeyboardKey, std::unique_ptr<Command>>;
 
 		KeyboardCommandsMap m_KeyboardCommands{};
 
+		//Initialize keyboard
+		std::unique_ptr<Keyboard> m_Keyboard{ std::make_unique<Keyboard>() };
+
 		std::vector<std::unique_ptr<XBoxController>> m_pControllers{};
 
 		void UpdateConsoleInput();
-		void UpdateKeyboardInput(SDL_Event e);
+		void UpdateKeyboardInput();
 	};
 
 	template<typename CommandType>
-	void InputManager::CreateConsoleCommand(ButtonState state, XBoxController::ControllerButton button, GameObject* pGameobject)
+	void InputManager::CreateConsoleCommand(ButtonState state, XBoxController::ControllerButton button)
 	{
-		std::unique_ptr<CommandType> command = std::make_unique<CommandType>(pGameobject);
+		std::unique_ptr<CommandType> command = std::make_unique<CommandType>();
 		ControllerKey key = std::pair{state, button};
 		m_ConsoleCommands.insert(std::pair{ key, std::move(command)});
 	}
 
 	template<typename CommandType>
-	void InputManager::CreateKeyboardCommand(ButtonState state, int button, GameObject* pGameobject)
+	void InputManager::CreateKeyboardCommand(ButtonState state, SDL_Scancode button)
 	{
-		std::unique_ptr<CommandType> command = std::make_unique<CommandType>(pGameobject);
+		std::unique_ptr<CommandType> command = std::make_unique<CommandType>();
 		KeyboardKey key = std::pair{ state, button };
 		m_KeyboardCommands.insert(std::pair{ key, std::move(command) });
 	}

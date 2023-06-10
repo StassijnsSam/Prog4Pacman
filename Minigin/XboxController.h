@@ -33,6 +33,8 @@ namespace dae {
 		bool IsDownThisFrame(ControllerButton button);
 		bool IsUpThisFrame(ControllerButton button);
 		bool IsPressed(ControllerButton button);
+
+		int GetControllerIndex();
 	private:
 	};
 }
