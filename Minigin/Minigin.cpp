@@ -93,7 +93,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	const int frameTimeMs{ static_cast<int>(1000 / desiredFPS) };
 
 	float lag = 0.0f;
-	const float timeStep = 1.f / desiredFPS;
+	const float timeStep{ 0.02f };
 
 	while (doContinue)
 	{
@@ -101,13 +101,12 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		const float deltaTime = std::chrono::duration<float>(currTime - lastTime).count();
 
 		lastTime = currTime;
-		//lag += deltaTime;
+		lag += deltaTime;
 
 		doContinue = input.ProcessInput();
 		
-		//No need for Physics/Animations (yet)
-
-		while (lag >= timeStep) {
+		//Physics
+		while (lag >= timeStep) {	
 			CollisionManager::GetInstance().FixedUpdate();
 			sceneManager.FixedUpdate();
 			Time::GetInstance().Update(timeStep);

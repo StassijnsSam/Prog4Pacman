@@ -1,5 +1,5 @@
 #include "PacmanComponent.h"
-#include "ColliderComponent.h"
+#include "CircleColliderComponent.h"
 #include "LootComponent.h"
 #include "Timetracker.h"
 
@@ -11,7 +11,7 @@ PacmanComponent::PacmanComponent(dae::GameObject* pGameObject)
 
 void PacmanComponent::Initialize()
 {
-	auto collider = GetOwner()->GetComponent<dae::ColliderComponent>();
+	auto collider = GetOwner()->GetComponent<dae::CircleColliderComponent>();
 
 	if (collider) {
 		//Link the collision function

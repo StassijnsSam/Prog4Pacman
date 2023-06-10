@@ -1,4 +1,5 @@
 #include "ColliderComponent.h"
+#include "CollisionManager.h"
 
 void dae::ColliderComponent::OnCollision(ColliderComponent* other)
 {
@@ -9,9 +10,20 @@ void dae::ColliderComponent::OnCollision(ColliderComponent* other)
 	}
 }
 
+void dae::ColliderComponent::SetCollisionCallback(std::function<void(GameObject* other)> callback)
+{
+	m_Callback = callback;
+}
+
 dae::ColliderComponent::ColliderComponent(GameObject* pOwner)
 	:BaseComponent(pOwner)
 {
+	CollisionManager::GetInstance().Add(this);
+}
+
+dae::ColliderComponent::~ColliderComponent()
+{
+	CollisionManager::GetInstance().Remove(this);
 }
 
 void dae::ColliderComponent::Initialize()

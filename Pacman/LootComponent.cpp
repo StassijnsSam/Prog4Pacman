@@ -1,5 +1,5 @@
 #include "LootComponent.h"
-#include "ColliderComponent.h"
+#include "CircleColliderComponent.h"
 #include "PacmanComponent.h"
 
 LootComponent::LootComponent(dae::GameObject* pGameObject, int pickupScore, bool makesInvincible)
@@ -9,7 +9,7 @@ LootComponent::LootComponent(dae::GameObject* pGameObject, int pickupScore, bool
 
 void LootComponent::Initialize()
 {
-	auto collider = GetOwner()->GetComponent<dae::ColliderComponent>();
+	auto collider = GetOwner()->GetComponent<dae::CircleColliderComponent>();
 
 	if (collider) {
 		//Link the collision function

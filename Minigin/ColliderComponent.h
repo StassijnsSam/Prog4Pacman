@@ -8,7 +8,7 @@ namespace dae {
 	{
 	public:
 		ColliderComponent(GameObject* pOwner);
-		virtual ~ColliderComponent() = default;
+		virtual ~ColliderComponent();
 
 		ColliderComponent(const ColliderComponent& other) = delete;
 		ColliderComponent& operator=(const ColliderComponent& other) = delete;
@@ -21,7 +21,7 @@ namespace dae {
 		virtual void Recieve(int message) const override;
 
 		virtual void OnCollision(ColliderComponent* other);
-		virtual void SetCollisionCallback(std::function<void(GameObject* other)> callback) { m_Callback = callback; }
+		virtual void SetCollisionCallback(std::function<void(GameObject* other)> callback);
 
 		//Make this an abstract class
 		virtual bool IsColliding(ColliderComponent* other) = 0;
