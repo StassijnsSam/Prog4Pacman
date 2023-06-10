@@ -40,6 +40,14 @@ void Scene::Update()
 	}
 }
 
+void dae::Scene::FixedUpdate()
+{
+	for (auto& object : m_objects)
+	{
+		object->FixedUpdate();
+	}
+}
+
 void dae::Scene::LateUpdate()
 {
 	for (auto& object : m_objects)

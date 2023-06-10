@@ -17,6 +17,7 @@ namespace dae {
 
 		virtual void Initialize() = 0;
 		virtual void Update() = 0;
+		virtual void FixedUpdate();
 		virtual void Render() const = 0;
 		virtual void Recieve(int message) const = 0;
 

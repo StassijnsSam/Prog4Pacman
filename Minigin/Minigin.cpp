@@ -11,6 +11,7 @@
 #include "ResourceManager.h"
 #include <chrono>
 #include "Timetracker.h"
+#include "CollisionManager.h"
 
 SDL_Window* g_window{};
 
@@ -88,10 +89,12 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	bool doContinue = true;
 	auto lastTime = std::chrono::high_resolution_clock::now();
 
-	//float lag = 0.0f;
-	//const float timeStep = 0.02f;
 	const float desiredFPS{ 144.f };
 	const int frameTimeMs{ static_cast<int>(1000 / desiredFPS) };
+
+	float lag = 0.0f;
+	const float timeStep = 1.f / desiredFPS;
+
 	while (doContinue)
 	{
 		const auto currTime = std::chrono::high_resolution_clock::now();
@@ -104,11 +107,12 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		
 		//No need for Physics/Animations (yet)
 
-		/*while (lag >= timeStep) {
+		while (lag >= timeStep) {
+			CollisionManager::GetInstance().FixedUpdate();
 			sceneManager.FixedUpdate();
 			Time::GetInstance().Update(timeStep);
 			lag -= timeStep;
-		}*/
+		}
 
 		sceneManager.Update();
 		Time::GetInstance().Update(deltaTime);

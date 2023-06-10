@@ -28,6 +28,15 @@ void dae::GameObject::Update()
 	}
 }
 
+void dae::GameObject::FixedUpdate()
+{
+	for (auto& it : m_pComponents) {
+		if (it.second != nullptr) {
+			it.second->FixedUpdate();
+		}
+	}
+}
+
 void dae::GameObject::LateUpdate()
 {
 	for (auto& it : m_pComponents) {
