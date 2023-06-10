@@ -61,6 +61,13 @@ void dae::GameObject::MarkForDeletion()
 			it.second->MarkForDeletion();
 		}
 	}
+
+	//Mark all the children for deletion
+	for (auto& pChild : m_pChildren) {
+		if (pChild != nullptr) {
+			pChild->MarkForDeletion();
+		}
+	}
 }
 
 void dae::GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
