@@ -1,34 +1,19 @@
 #pragma once
 #include "Command.h"
+#include "glm/vec2.hpp"
 
 namespace dae {
 
-	class UpCommand final : public Command
+	class Move final : public Command
 	{
 	public:
-		UpCommand(GameObject* pGameObject);
+		Move(GameObject* pGameObject, const glm::vec2& dir, float moveSpeed);
 		virtual void Execute() override;
-	};
 
-	class DownCommand final : public Command
-	{
-	public:
-		DownCommand(GameObject* pGameObject);
-		virtual void Execute() override;
-	};
-
-	class LeftCommand final : public Command
-	{
-	public:
-		LeftCommand(GameObject* pGameObject);
-		virtual void Execute() override;
-	};
-
-	class RightCommand final : public Command
-	{
-	public:
-		RightCommand(GameObject* pGameObject);
-		virtual void Execute() override;
+	private:
+		GameObject* m_pGameObject{};
+		glm::vec2 m_Direction{};
+		float m_MoveSpeed{};
 	};
 }
 
