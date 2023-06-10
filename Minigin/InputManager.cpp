@@ -19,6 +19,16 @@ bool dae::InputManager::ProcessInput()
 	return true;
 }
 
+void dae::InputManager::ClearKeyboardCommands()
+{
+	m_KeyboardCommands.clear();
+}
+
+void dae::InputManager::ClearConsoleCommands()
+{
+	m_ConsoleCommands.clear();
+}
+
 int dae::InputManager::CreateController()
 {
 	int controllerIndex =  static_cast<int>(m_pControllers.size()) - 1;

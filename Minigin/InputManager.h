@@ -30,6 +30,9 @@ namespace dae
 		
 		bool ProcessInput();
 
+		void ClearKeyboardCommands();
+		void ClearConsoleCommands();
+
 		template<typename T>
 		void CreateConsoleCommand(ButtonState state, XBoxController::ControllerButton button);
 
