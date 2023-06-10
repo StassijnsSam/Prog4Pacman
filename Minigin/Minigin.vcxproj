@@ -199,6 +199,7 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="ISound.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="LoggingSoundSystem.h" />
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="MoveCommands.h" />
     <ClInclude Include="MovementComponent.h" />
@@ -228,6 +229,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="ISound.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="LoggingSoundSystem.cpp" />
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="MoveCommands.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
