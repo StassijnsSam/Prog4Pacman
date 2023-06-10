@@ -6,6 +6,7 @@
 namespace dae {
 	class ColliderComponent : public BaseComponent
 	{
+	public:
 		ColliderComponent(GameObject* pOwner);
 		virtual ~ColliderComponent() = default;
 
