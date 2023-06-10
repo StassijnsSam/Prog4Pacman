@@ -152,10 +152,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PacmanComponent.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h" />
+    <ClInclude Include="PacmanComponent.h" />
     <ClInclude Include="ScoreComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
