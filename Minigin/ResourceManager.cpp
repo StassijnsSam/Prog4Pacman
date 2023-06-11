@@ -22,6 +22,12 @@ std::string dae::ResourceManager::GetFullSoundPath(const std::string& file) cons
 	return fullPath;
 }
 
+std::string dae::ResourceManager::GetFullLevelPath(const std::string& file) const
+{
+	const auto fullPath = m_dataPath + file;
+	return fullPath;
+}
+
 std::shared_ptr<dae::Texture2D> dae::ResourceManager::LoadTexture(const std::string& file) const
 {
 	const auto fullPath = m_dataPath + file;
