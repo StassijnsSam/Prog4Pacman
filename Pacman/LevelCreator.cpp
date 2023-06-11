@@ -8,6 +8,8 @@
 #include "StateMachine.h"
 #include "GhostStates.h"
 #include "PacmanComponent.h"
+#include "InputManager.h"
+#include "MoveCommands.h"
 
 void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
 {
@@ -81,6 +83,11 @@ void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
 
                 scene.Add(ghost);
 
+                //Make the first ghost the console player
+                if (ghostNumber == 1) {
+                    SetupConsolePlayer(ghost.get());
+                }
+
                 ++ghostNumber;
 
                 break;
@@ -96,6 +103,8 @@ void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
 
 
                 scene.Add(pacman);
+
+                SetupKeyboardPlayer(pacman.get());
                 break;
             }
 
@@ -104,11 +113,44 @@ void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
             }
         }
     }
-
-    SetupPlayers();
 }
 
-void LevelCreator::SetupPlayers()
+void LevelCreator::SetupKeyboardPlayer(dae::GameObject* pPlayer)
 {
-    //For now locked to versus but depending on different mode this would do different things
+    const float movementSpeed{ 100.f };
+    
+    dae::InputManager::GetInstance().CreateKeyboardCommand(
+    	dae::ButtonState::Hold, SDL_SCANCODE_LEFT,
+    	std::make_unique<dae::Move>(pPlayer, glm::vec2{ -1, 0 }, movementSpeed));
+    dae::InputManager::GetInstance().CreateKeyboardCommand(
+    	dae::ButtonState::Hold, SDL_SCANCODE_RIGHT,
+    	std::make_unique<dae::Move>(pPlayer, glm::vec2{ 1, 0 }, movementSpeed));
+    dae::InputManager::GetInstance().CreateKeyboardCommand(
+    	dae::ButtonState::Hold, SDL_SCANCODE_UP,
+    	std::make_unique<dae::Move>(pPlayer, glm::vec2{ 0, -1 }, movementSpeed));
+    dae::InputManager::GetInstance().CreateKeyboardCommand(
+    	dae::ButtonState::Hold, SDL_SCANCODE_DOWN,
+    	std::make_unique<dae::Move>(pPlayer, glm::vec2{ 0, 1 }, movementSpeed));
+}
+
+void LevelCreator::SetupConsolePlayer(dae::GameObject* pPlayer)
+{
+    //Create controller
+    dae::InputManager::GetInstance().CreateController();
+
+    const float movementSpeed{ 100.f };
+
+    //Console player ghost1
+    dae::InputManager::GetInstance().CreateConsoleCommand(
+    	dae::ButtonState::Hold, dae::XBoxController::ControllerButton::DPadLeft, 
+    	std::make_unique<dae::Move>(pPlayer, glm::vec2{-1, 0}, movementSpeed));
+    dae::InputManager::GetInstance().CreateConsoleCommand(
+    	dae::ButtonState::Hold, dae::XBoxController::ControllerButton::DPadRight,
+    	std::make_unique<dae::Move>(pPlayer, glm::vec2{ 1, 0 }, movementSpeed));
+    dae::InputManager::GetInstance().CreateConsoleCommand(
+    	dae::ButtonState::Hold, dae::XBoxController::ControllerButton::DPadUp,
+    	std::make_unique<dae::Move>(pPlayer, glm::vec2{ 0, -1 }, movementSpeed));
+    dae::InputManager::GetInstance().CreateConsoleCommand(
+    	dae::ButtonState::Hold, dae::XBoxController::ControllerButton::DPadDown,
+    	std::make_unique<dae::Move>(pPlayer, glm::vec2{ 0, 1 }, movementSpeed));
 }

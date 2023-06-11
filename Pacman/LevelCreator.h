@@ -12,6 +12,7 @@ public:
 	static void CreateLevel(const PacmanLevel& level, dae::Scene& scene);
 
 private:
-	static void SetupPlayers();
+	static void SetupKeyboardPlayer(dae::GameObject* pPlayer);
+	static void SetupConsolePlayer(dae::GameObject* pPlayer);
 };
 
