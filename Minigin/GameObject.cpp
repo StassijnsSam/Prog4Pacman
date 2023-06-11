@@ -10,6 +10,12 @@ dae::GameObject::GameObject(glm::vec2 position)
 	m_pTransform = GetComponent<Transform>();
 }
 
+dae::GameObject::~GameObject()
+{
+	m_pComponents.clear();
+	m_pChildren.clear();
+}
+
 void dae::GameObject::Initialize()
 {
 	for (auto& componentPair : m_pComponents) {
@@ -39,7 +45,6 @@ void dae::GameObject::FixedUpdate()
 
 void dae::GameObject::LateUpdate()
 {
-	//Only need to remove them if you yourself arent marked for deletion, otherwise they will all be automatically removed anyways
 	if (m_IsMarkedForDeletion) {
 		return;
 	}

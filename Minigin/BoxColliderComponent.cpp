@@ -3,17 +3,22 @@
 #include "GameObject.h"
 #include <algorithm>
 
-dae::BoxColliderComponent::BoxColliderComponent(GameObject* pOwner, glm::vec2 size, glm::vec2 offset):
-	ColliderComponent(pOwner), m_Size(size), m_Offset(offset)
+dae::BoxColliderComponent::BoxColliderComponent(GameObject* pOwner, glm::vec2 size, bool isStatic, glm::vec2 offset):
+	ColliderComponent(pOwner, ColliderType::BOX, isStatic), m_Size(size), m_Offset(offset)
 {
 }
 
 bool dae::BoxColliderComponent::IsColliding(ColliderComponent* other)
 {
+	//If both colliders are static no need to check
+	if (m_IsStatic && other->GetIsStatic()) {
+		return false;
+	}
+	
 	//Check if the other Collider is a circleCollider
-	auto pOtherColliderCircle = dynamic_cast<CircleColliderComponent*>(other);
+	if (other->GetColliderType() == ColliderType::CIRCLE) {
+		auto pOtherColliderCircle = dynamic_cast<CircleColliderComponent*>(other);
 
-	if (pOtherColliderCircle) {
 		auto ownerLocation = m_pOwner->GetTransform()->GetWorldPosition();
 		auto otherOwnerLocation = pOtherColliderCircle->GetOwner()->GetTransform()->GetWorldPosition();
 		
@@ -27,9 +32,9 @@ bool dae::BoxColliderComponent::IsColliding(ColliderComponent* other)
 	}
 
 	//Check if the other Collider is a boxCollider
-	auto pOtherColliderBox = dynamic_cast<BoxColliderComponent*>(other);
+	if (other->GetColliderType() == ColliderType::BOX) {
+		auto pOtherColliderBox = dynamic_cast<BoxColliderComponent*>(other);
 
-	if (pOtherColliderBox) {
 		auto ownerLocation = m_pOwner->GetTransform()->GetWorldPosition();
 		auto otherOwnerLocation = pOtherColliderBox->GetOwner()->GetTransform()->GetWorldPosition();
 

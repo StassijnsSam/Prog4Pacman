@@ -35,8 +35,9 @@ void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
                     glm::vec2{ startPosX + col * level.gridElementSize, startPosY + row * level.gridElementSize });
 
                 wall.get()->AddComponent<dae::RenderComponent>("wall.png");
-                wall.get()->AddComponent<dae::BoxColliderComponent>(glm::vec2{10.0f, 10.0f});
-                wall.get()->AddComponent<WallComponent>();
+                //Walls are static, so pass true
+                //wall.get()->AddComponent<dae::BoxColliderComponent>(glm::vec2{8.0f, 8.0f}, true);
+                //wall.get()->AddComponent<WallComponent>();
 
                 scene.Add(wall);
 
@@ -49,7 +50,8 @@ void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
                     glm::vec2{ startPosX + col * level.gridElementSize, startPosY + row * level.gridElementSize });
 
                 pellet.get()->AddComponent<dae::RenderComponent>("pill.png");
-                pellet.get()->AddComponent<dae::CircleColliderComponent>(3.0f);
+                //Pellets are static, so pass true
+                pellet.get()->AddComponent<dae::CircleColliderComponent>(3.0f, true);
                 pellet.get()->AddComponent<LootComponent>(10);
 
                 scene.Add(pellet);
@@ -79,7 +81,7 @@ void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
                 std::string texture = "ghost" + std::to_string(ghostNumber) + ".png";
 
                 ghost.get()->AddComponent<dae::RenderComponent>(texture);
-                ghost.get()->AddComponent<dae::CircleColliderComponent>(10.0f);
+                ghost.get()->AddComponent<dae::CircleColliderComponent>(8.0f);
                 ghost.get()->AddComponent<GhostComponent>();
                 //	Create a starting state for the ghost
                 auto ghostStartState = std::make_unique<GhostNormalState>(ghost.get(), texture);
@@ -102,7 +104,7 @@ void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
                     glm::vec2{ startPosX + col * level.gridElementSize, startPosY + row * level.gridElementSize });
 
                 pacman.get()->AddComponent<dae::RenderComponent>("Pacman.png");
-                pacman.get()->AddComponent<dae::CircleColliderComponent>(10.0f);
+                pacman.get()->AddComponent<dae::CircleColliderComponent>(8.0f);
                 pacman.get()->AddComponent<PacmanComponent>();
 
 

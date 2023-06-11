@@ -7,7 +7,7 @@ namespace dae {
 	class CircleColliderComponent final : public ColliderComponent
 	{
 	public:
-		CircleColliderComponent(GameObject* pOwner, float radius, glm::vec2 offset = glm::vec2{0, 0});
+		CircleColliderComponent(GameObject* pOwner, float radius, bool isStatic = false, glm::vec2 offset = glm::vec2{0, 0});
 		virtual ~CircleColliderComponent() = default;
 
 		CircleColliderComponent(const CircleColliderComponent& other) = delete;

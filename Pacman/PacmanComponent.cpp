@@ -126,8 +126,7 @@ void PacmanComponent::OnCollision(dae::GameObject* other)
 	auto wallComponent = other->GetComponent<WallComponent>();
 	if (wallComponent){
 		//If you run into a wall, set your position to the position it is right now
-		auto transform = GetOwner()->GetTransform();
-		transform->SetWorldPosition({ transform->GetWorldPosition().x, transform->GetWorldPosition().y });
+		
 	}
 }
 

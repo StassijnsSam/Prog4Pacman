@@ -6,8 +6,19 @@
 namespace dae {
 	class ColliderComponent : public BaseComponent
 	{
+	protected:
+		enum ColliderType {
+			BOX,
+			CIRCLE
+		};
+
+		std::function<void(GameObject* other)> m_Callback{};
+		ColliderType m_ColliderType;
+
+		bool m_IsStatic{ false };
+
 	public:
-		ColliderComponent(GameObject* pOwner);
+		ColliderComponent(GameObject* pOwner, ColliderType colliderType, bool isStatic = false);
 		virtual ~ColliderComponent();
 
 		ColliderComponent(const ColliderComponent& other) = delete;
@@ -26,8 +37,8 @@ namespace dae {
 		//Make this an abstract class
 		virtual bool IsColliding(ColliderComponent* other) = 0;
 
-	private:
-		std::function<void(GameObject* other)> m_Callback{};
+		bool GetIsStatic();
+		ColliderType GetColliderType();
 	};
 }
 

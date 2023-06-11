@@ -8,7 +8,7 @@ namespace dae {
 	class BoxColliderComponent final : public ColliderComponent
 	{
 	public:
-		BoxColliderComponent(GameObject* pOwner, glm::vec2 size, glm::vec2 offset = glm::vec2{ 0, 0 });
+		BoxColliderComponent(GameObject* pOwner, glm::vec2 size, bool isStatic = false, glm::vec2 offset = glm::vec2{ 0, 0 });
 		virtual ~BoxColliderComponent() = default;
 
 		BoxColliderComponent(const BoxColliderComponent& other) = delete;

@@ -11,7 +11,7 @@ namespace dae {
 	class GameObject final {
 	public:
 		GameObject(glm::vec2 position = glm::vec2{});
-		~GameObject() = default;
+		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;

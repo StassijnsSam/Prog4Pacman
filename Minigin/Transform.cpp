@@ -94,6 +94,11 @@ void dae::Transform::SetDirection(const glm::vec2& direction)
 	m_Direction = direction;
 }
 
+const glm::vec2& dae::Transform::GetDirection()
+{
+	return m_Direction;
+}
+
 void dae::Transform::AddRotation(float rot)
 {
 	m_Rotation += rot;
