@@ -12,6 +12,7 @@
 #include <chrono>
 #include "Timetracker.h"
 #include "CollisionManager.h"
+#include "ServiceLocator.h"
 
 SDL_Window* g_window{};
 

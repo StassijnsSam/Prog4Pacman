@@ -4,6 +4,7 @@
 #include "Timetracker.h"
 #include "GhostComponent.h"
 #include "Enums.h"
+#include "ServiceLocator.h"
 
 PacmanComponent::PacmanComponent(dae::GameObject* pGameObject)
 	:BaseComponent(pGameObject)
@@ -115,6 +116,9 @@ void PacmanComponent::OnCollision(dae::GameObject* other)
 
 		//Notify score observer
 		m_PacmanSubject.get()->Notify(this->GetOwner(), EventType::PLAYER_GOT_SCORE);
+
+		//Play sound
+		dae::ServiceLocator::GetSoundService()->Play("pacman_chomp.wav", 30);
 	}
 }
 

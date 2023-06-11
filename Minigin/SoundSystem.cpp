@@ -25,32 +25,46 @@ namespace dae {
         void SoundThreadFunction() {
             while (m_IsRunning) {
                 // Wait for event queue to have a sound request
-                std::unique_lock<std::mutex> lock(eventQueueMutex);
-                eventQueueNotEmpty.wait(lock, [this]() { return !eventQueue.empty(); });
+                std::unique_lock lock(eventQueueMutex);
+                eventQueueNotEmpty.wait(lock, [this]() { return !m_IsRunning || !eventQueue.empty(); });
 
-                // Get next sound request
-                SoundRequest request = eventQueue.front();
-                eventQueue.pop();
-                lock.unlock();
+                if (!eventQueue.empty()) {
+                    // Get next sound request
+                    SoundRequest request = eventQueue.front();
+                    eventQueue.pop();
+                    lock.unlock();
 
-                Mix_Chunk* pSound;
-                // Check if you have already loaded this sound before
-                if (m_pLoadedSounds.contains(request.soundName)) {
-                    pSound = m_pLoadedSounds.at(request.soundName);
-                }
-                else {
-                    //Create sound
-                    std::string soundPath = ResourceManager::GetInstance().GetFullSoundPath(request.soundName);
-                    pSound = Mix_LoadWAV(soundPath.c_str());
-                }
+                    Mix_Chunk* pSound;
+                    // Check if you have already loaded this sound before
+                    if (m_pLoadedSounds.contains(request.soundName)) {
+                        pSound = m_pLoadedSounds.at(request.soundName);
+                    }
+                    else {
+                        //Create sound
+                        std::string soundPath = ResourceManager::GetInstance().GetFullSoundPath(request.soundName);
+                        pSound = Mix_LoadWAV(soundPath.c_str());
+                        m_pLoadedSounds.insert(std::pair(soundPath, pSound));
+                    }
 
-                // Play sound
-                Mix_VolumeChunk(pSound, request.volume);
-                Mix_PlayChannel(-1, pSound, 0);
+
+                    // Play sound
+                    Mix_VolumeChunk(pSound, request.volume);
+                    Mix_PlayChannel(-1, pSound, 0);
+                }   
             }
         }
 
         void Stop() {
+
+            m_IsRunning = false;
+
+            //Clean up the loaded sounds
+            for (auto soundPair : m_pLoadedSounds)
+            {
+                Mix_FreeChunk(soundPair.second);
+                soundPair.second = nullptr;
+            }
+
             Mix_CloseAudio();
             Mix_Quit();
         }
@@ -93,9 +107,7 @@ namespace dae {
     SoundSystem::SoundSystemImpl::~SoundSystemImpl()
     {
         m_IsRunning = false;
-        // Clean up SDL_mixer
-        Mix_CloseAudio();
-        Mix_Quit();
+        eventQueueNotEmpty.notify_one();
 
         //Clean up the loaded sounds
         for (auto soundPair : m_pLoadedSounds)
@@ -103,12 +115,22 @@ namespace dae {
             Mix_FreeChunk(soundPair.second);
             soundPair.second = nullptr;
         }
+
+        // Clean up SDL_mixer
+        Mix_CloseAudio();
+        Mix_Quit();
     }
 }
 
 dae::SoundSystem::SoundSystem()
 {
-    pImpl = std::make_unique<SoundSystemImpl>();
+    pImpl = new SoundSystemImpl();
+}
+
+dae::SoundSystem::~SoundSystem()
+{
+    delete pImpl;
+    pImpl = nullptr;
 }
 
 void dae::SoundSystem::Play(const std::string& soundName, const int volume)

@@ -1,32 +1,20 @@
 #include "ServiceLocator.h"
 
-void dae::ServiceLocator::Initialize()
-{
-	m_pNullSoundService = dae::NullSoundService();
+//Initialize as nullSound
+std::unique_ptr<dae::ISound> dae::ServiceLocator::m_pSoundService{ std::make_unique<dae::NullSoundService>() };
 
-	//Initially set the service to nullService
-	m_pSoundService = &m_pNullSoundService;
-}
 
-void dae::ServiceLocator::Provide(ISound* pSoundService)
+void dae::ServiceLocator::Provide(std::unique_ptr<dae::ISound>&& pSoundService)
 {
 	if (pSoundService == nullptr) {
-		m_pSoundService = &m_pNullSoundService;
+		m_pSoundService = std::make_unique<NullSoundService>();
 	}
 	else {
-		m_pSoundService = pSoundService;
+		m_pSoundService = std::move(pSoundService);
 	}
 }
 
 dae::ISound* dae::ServiceLocator::GetSoundService()
 {
-	return m_pSoundService;
-}
-
-void dae::ServiceLocator::DestroySoundService()
-{
-	if (m_pSoundService != &m_pNullSoundService) {
-		delete m_pSoundService;
-		m_pSoundService = &m_pNullSoundService;
-	}
+	return m_pSoundService.get();
 }

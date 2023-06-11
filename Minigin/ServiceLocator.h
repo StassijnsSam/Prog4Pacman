@@ -2,6 +2,7 @@
 
 #include "ISound.h"
 #include "NullSoundService.h"
+#include <memory>
 
 namespace dae {
 	class ServiceLocator final
@@ -12,18 +13,14 @@ namespace dae {
         ServiceLocator& operator=(const ServiceLocator& other) = delete;
         ServiceLocator& operator=(ServiceLocator&& other) = delete;
 
-        static void Initialize();
-        static void Provide(ISound* pSoundService);
+        static void Provide(std::unique_ptr<dae::ISound>&& pSoundService);
         static ISound* GetSoundService();
-
-        static void DestroySoundService();
 
     private:
         ServiceLocator() = default;
         ~ServiceLocator() = default;
 
-        static ISound* m_pSoundService;
-        static NullSoundService m_pNullSoundService;
+        static std::unique_ptr<ISound> m_pSoundService;
 	};
 }
 
