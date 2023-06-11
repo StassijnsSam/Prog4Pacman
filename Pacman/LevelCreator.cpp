@@ -24,6 +24,8 @@ void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
     float startPosY = (level.windowHeight - (level.gridHeight * level.gridElementSize)) / 2.0f;
 
     int ghostNumber{ 1 };
+    std::vector<GhostComponent*> ghostComponents{};
+    PacmanComponent* pacmanComponent{};
 
     //Loop over the levelGrid and create all the needed gameObjects
     for (int row{ 0 }; row < level.gridHeight; ++row) {
@@ -86,10 +88,12 @@ void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
 
                 ghost.get()->AddComponent<dae::RenderComponent>(texture);
                 ghost.get()->AddComponent<dae::CircleColliderComponent>(8.0f);
-                ghost.get()->AddComponent<GhostComponent>();
+                auto ghostComponent = ghost.get()->AddComponent<GhostComponent>();
                 //	Create a starting state for the ghost
                 auto ghostStartState = std::make_unique<GhostNormalState>(ghost.get(), texture);
                 ghost.get()->AddComponent<dae::StateMachine>(std::move(ghostStartState));
+
+                ghostComponents.emplace_back(ghostComponent);
 
                 scene.Add(ghost);
 
@@ -109,7 +113,7 @@ void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
 
                 pacman.get()->AddComponent<dae::RenderComponent>("Pacman.png");
                 pacman.get()->AddComponent<dae::CircleColliderComponent>(8.0f);
-                pacman.get()->AddComponent<PacmanComponent>();
+                pacmanComponent = pacman.get()->AddComponent<PacmanComponent>();
 
 
                 scene.Add(pacman);
@@ -123,6 +127,11 @@ void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
                 break;
             }
         }
+    }
+
+    //Link the ghosts as observers
+    for (auto ghostComponent : ghostComponents) {
+        pacmanComponent->AddObserver(ghostComponent);
     }
 }
 

@@ -39,7 +39,7 @@ private:
 
 	void EnableCanKill();
 	float m_CanKillTimer{};
-	float m_MaxCanKillTime{ 3.0f };
+	float m_MaxCanKillTime{ 5.0f };
 
 	bool m_IsInvincible{ false };
 

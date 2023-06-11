@@ -3,6 +3,7 @@
 #include "CircleColliderComponent.h"
 #include "Timetracker.h"
 #include "GhostStates.h"
+#include "Enums.h"
 
 GhostComponent::GhostComponent(dae::GameObject* pGameObject)
 	:BaseComponent(pGameObject)
@@ -56,6 +57,25 @@ void GhostComponent::Recieve(int) const
 {
 }
 
+void GhostComponent::OnNotify(const dae::GameObject*, int event)
+{
+	switch (event)
+	{
+	case EventType::PLAYER_CAN_KILL:
+	{
+		SetIsScared(true);
+		break;
+	}
+	case EventType::PLAYER_CAN_NOT_KILL:
+	{
+		SetIsScared(false);
+		break;
+	}
+	default:
+		break;
+	}
+}
+
 int GhostComponent::GetIsDead()
 {
 	return m_IsDead;
@@ -85,10 +105,17 @@ void GhostComponent::SetIsDead(bool isDead)
 {
 	m_IsDead = isDead;
 
+	if (isDead) {
+		m_DeadTimer = m_MaxDeadTime;
+	}
+}
+
+void GhostComponent::SetIsScared(bool isScared)
+{
 	//Change texture
-	if (m_IsDead) {
+	if (isScared) {
 		if (m_pStateMachine) {
-			m_pStateMachine->UpdateState(std::make_unique<GhostDeadState>(GetOwner(), "GhostDead.png"));
+			m_pStateMachine->UpdateState(std::make_unique<GhostDeadState>(GetOwner(), "scaredGhost.png"));
 		}
 	}
 	else
@@ -96,10 +123,5 @@ void GhostComponent::SetIsDead(bool isDead)
 		if (m_pStateMachine) {
 			m_pStateMachine->UpdateState(std::make_unique<GhostNormalState>(GetOwner(), m_NormalTexturePath));
 		}
-	}
-
-	//Set max dead timer
-	if (isDead) {
-		m_DeadTimer = m_MaxDeadTime;
 	}
 }

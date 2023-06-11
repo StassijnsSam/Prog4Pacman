@@ -40,6 +40,7 @@ void PacmanComponent::Update()
 
 		if (m_CanKillTimer <= 0.f) {
 			m_CanKill = false;
+			m_PacmanSubject.get()->Notify(this->GetOwner(), EventType::PLAYER_CAN_NOT_KILL);
 		}
 	}
 }
@@ -111,6 +112,7 @@ void PacmanComponent::OnCollision(dae::GameObject* other)
 		if (makesInvincible) {
 			//Can kill ghosts
 			EnableCanKill();
+			m_PacmanSubject.get()->Notify(this->GetOwner(), EventType::PLAYER_CAN_KILL);
 		}
 
 		m_Score += score;
