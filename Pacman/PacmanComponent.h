@@ -45,7 +45,7 @@ private:
 
 	void EnableInvincible();
 	float m_InvincibilityTimer{};
-	float m_MaxInvincibilityTime{ 1.0f };
+	float m_MaxInvincibilityTime{ 2.0f };
 
 	std::unique_ptr<dae::Subject> m_PacmanSubject{};
 };

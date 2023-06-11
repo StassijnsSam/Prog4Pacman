@@ -2,6 +2,7 @@
 #include "CircleColliderComponent.h"
 #include "LootComponent.h"
 #include "Timetracker.h"
+#include "GhostComponent.h"
 #include "Enums.h"
 
 PacmanComponent::PacmanComponent(dae::GameObject* pGameObject)
@@ -79,6 +80,24 @@ bool PacmanComponent::GetIsInvincible()
 void PacmanComponent::OnCollision(dae::GameObject* other)
 {
 	//Check if its an enemy
+	auto ghostComponent = other->GetComponent<GhostComponent>();
+	if (ghostComponent) {
+		if (m_CanKill) {
+			//gain some score?
+			
+		}
+
+		if (!m_IsInvincible && !m_CanKill) {
+			//Lose a life
+			m_Lives -= 1;
+
+			//Temporary invincibility
+			EnableInvincible();
+
+			//Notify lives observer
+			m_PacmanSubject.get()->Notify(this->GetOwner(), EventType::PLAYER_HURT);
+		}
+	}
 
 	//Check if its loot
 	auto lootComponent = other->GetComponent<LootComponent>();
@@ -88,7 +107,8 @@ void PacmanComponent::OnCollision(dae::GameObject* other)
 		bool makesInvincible = lootComponent->GetMakesInvincible();
 
 		if (makesInvincible) {
-			EnableInvincible();
+			//Can kill ghosts
+			EnableCanKill();
 		}
 
 		m_Score += score;

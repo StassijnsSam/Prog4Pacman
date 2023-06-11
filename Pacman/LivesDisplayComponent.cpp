@@ -48,12 +48,11 @@ void LivesDisplayComponent::SetLives(int lives)
 	for (int i{ 0 }; i < static_cast<int>(m_pLivesIcons.size()); ++i) {
 		auto pLifeIcon = m_pLivesIcons.at(i);
 
-		if (m_Lives > i + 1) {
-			pLifeIcon->SetIsVisible(false);
+		if (m_Lives >= i + 1) {
+			pLifeIcon->SetIsVisible(true);
 		}
 		else {
-			//In case you could regain lives
-			pLifeIcon->SetIsVisible(true);
+			pLifeIcon->SetIsVisible(false);
 		}
 	}
 }
