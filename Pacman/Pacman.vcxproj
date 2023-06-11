@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GhostComponent.cpp" />
+    <ClCompile Include="GhostStates.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
     <ClCompile Include="LootComponent.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -161,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="Enums.h" />
     <ClInclude Include="GhostComponent.h" />
+    <ClInclude Include="GhostStates.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
     <ClInclude Include="LootComponent.h" />
     <ClInclude Include="PacmanComponent.h" />

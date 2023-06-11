@@ -5,6 +5,7 @@ namespace dae {
 
 	class BaseState
 	{
+	public:
 		BaseState() = default;
 		virtual ~BaseState() = default;
 
