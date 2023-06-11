@@ -2,9 +2,10 @@
 #include "PacmanComponent.h"
 #include "CircleColliderComponent.h"
 #include "Timetracker.h"
+#include "GhostStates.h"
 
-GhostComponent::GhostComponent(dae::GameObject* pGameObject, const std::string& deadTexturePath)
-	:BaseComponent(pGameObject), m_DeadTexture(deadTexturePath)
+GhostComponent::GhostComponent(dae::GameObject* pGameObject)
+	:BaseComponent(pGameObject)
 {
 }
 
@@ -17,12 +18,17 @@ void GhostComponent::Initialize()
 		collider->SetCollisionCallback([&](dae::GameObject* hit) { this->OnCollision(hit); });
 	}
 
+	auto stateMachine = GetOwner()->GetComponent<dae::StateMachine>();
+
+	if (stateMachine) {
+		m_pStateMachine = stateMachine;
+	}
+
+	//Grab normal texture from renderComponent
 	auto renderComponent = GetOwner()->GetComponent<dae::RenderComponent>();
 
 	if (renderComponent) {
-		m_pRenderComponent = renderComponent;
-
-		m_NormalTexture = m_pRenderComponent->GetTexturePath();
+		m_NormalTexturePath = renderComponent->GetTexturePath();
 	}
 }
 
@@ -81,14 +87,14 @@ void GhostComponent::SetIsDead(bool isDead)
 
 	//Change texture
 	if (m_IsDead) {
-		if (m_pRenderComponent) {
-			m_pRenderComponent->SetTexture(m_DeadTexture);
+		if (m_pStateMachine) {
+			m_pStateMachine->UpdateState(std::make_unique<GhostDeadState>(GetOwner(), "GhostDead.png"));
 		}
 	}
 	else
 	{
-		if (m_pRenderComponent) {
-			m_pRenderComponent->SetTexture(m_NormalTexture);
+		if (m_pStateMachine) {
+			m_pStateMachine->UpdateState(std::make_unique<GhostNormalState>(GetOwner(), m_NormalTexturePath));
 		}
 	}
 

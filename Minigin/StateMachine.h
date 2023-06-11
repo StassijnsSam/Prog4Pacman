@@ -23,6 +23,7 @@ namespace dae {
 		virtual void FixedUpdate() override;
 
 		void UpdateState(std::unique_ptr<BaseState>&& state);
+
 	private:
 		std::unique_ptr<BaseState> m_pCurrentState{};
 	};

@@ -5,11 +5,12 @@
 #include "Observer.h"
 #include "Subject.h"
 #include "RenderComponent.h"
+#include "StateMachine.h"
 
 class GhostComponent final : public dae::BaseComponent
 {
 public:
-	GhostComponent(dae::GameObject* pGameObject, const std::string& deadTexturePath);
+	GhostComponent(dae::GameObject* pGameObject);
 	virtual ~GhostComponent() = default;
 
 	GhostComponent(const GhostComponent& other) = delete;
@@ -34,8 +35,7 @@ private:
 	float m_DeadTimer{};
 	float m_MaxDeadTime{ 3.0f };
 
-	//Render things
-	dae::RenderComponent* m_pRenderComponent{};
-	std::string m_NormalTexture{};
-	std::string m_DeadTexture{};
+	//State machine
+	std::string m_NormalTexturePath{};
+	dae::StateMachine* m_pStateMachine{};
 };
