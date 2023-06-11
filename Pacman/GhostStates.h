@@ -7,7 +7,7 @@
 class GhostNormalState final : public dae::BaseState
 {
 public:
-	GhostNormalState(const std::string& normalTexture);
+	GhostNormalState(dae::GameObject* pGameObject, const std::string& normalTexture);
 	virtual ~GhostNormalState() = default;
 
 	GhostNormalState(const GhostNormalState& other) = delete;
@@ -15,8 +15,10 @@ public:
 	GhostNormalState& operator=(const GhostNormalState& other) = delete;
 	GhostNormalState& operator=(GhostNormalState&& other) = delete;
 
-	virtual void Enter(dae::GameObject* pGameObject) override;
-	virtual void Exit(dae::GameObject* pGameObject) override;
+	virtual void Enter() override;
+	virtual void Exit() override;
+	virtual void Update() override;
+	virtual void FixedUpdate() override;
 
 private:
 	std::string m_NormalTexture{};
@@ -25,7 +27,7 @@ private:
 class GhostDeadState final : public dae::BaseState
 {
 public:
-	GhostDeadState(const std::string& deadTexture);
+	GhostDeadState(dae::GameObject* pGameObject, const std::string& deadTexture);
 	virtual ~GhostDeadState() = default;
 
 	GhostDeadState(const GhostDeadState& other) = delete;
@@ -33,8 +35,10 @@ public:
 	GhostDeadState& operator=(const GhostDeadState& other) = delete;
 	GhostDeadState& operator=(GhostDeadState&& other) = delete;
 
-	virtual void Enter(dae::GameObject* pGameObject) override;
-	virtual void Exit(dae::GameObject* pGameObject) override;
+	virtual void Enter() override;
+	virtual void Exit() override;
+	virtual void Update() override;
+	virtual void FixedUpdate() override;
 
 private:
 	std::string m_DeadTexture{};

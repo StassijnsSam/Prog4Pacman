@@ -2,54 +2,70 @@
 
 #include "GhostComponent.h"
 
-GhostNormalState::GhostNormalState(const std::string& normalTexture):
-	m_NormalTexture(normalTexture)
+GhostNormalState::GhostNormalState(dae::GameObject* pGameObject, const std::string& normalTexture):
+	BaseState(pGameObject), m_NormalTexture(normalTexture)
 {
 }
 
-void GhostNormalState::Enter(dae::GameObject* pGameObject)
+void GhostNormalState::Enter()
 {
 	//Check if this is on a ghost
-	auto ghostComponent = pGameObject->GetComponent<GhostComponent>();
+	auto ghostComponent = m_pGameObject->GetComponent<GhostComponent>();
 
 	if (!ghostComponent) {
 		return;
 	}
 
 	//Check if it has a renderComponent
-	auto renderComponent = pGameObject->GetComponent<dae::RenderComponent>();
+	auto renderComponent = m_pGameObject->GetComponent<dae::RenderComponent>();
 
 	if (renderComponent) {
 		renderComponent->SetTexture(m_NormalTexture);
 	}
 }
 
-void GhostNormalState::Exit(dae::GameObject*)
+void GhostNormalState::Exit()
 {
 }
 
-GhostDeadState::GhostDeadState(const std::string& deadTexture):
-	m_DeadTexture(deadTexture)
+void GhostNormalState::Update()
 {
 }
 
-void GhostDeadState::Enter(dae::GameObject* pGameObject)
+void GhostNormalState::FixedUpdate()
+{
+}
+
+GhostDeadState::GhostDeadState(dae::GameObject* pGameObject, const std::string& deadTexture):
+	BaseState(pGameObject), m_DeadTexture(deadTexture)
+{
+}
+
+void GhostDeadState::Enter()
 {
 	//Check if this is on a ghost
-	auto ghostComponent = pGameObject->GetComponent<GhostComponent>();
+	auto ghostComponent = m_pGameObject->GetComponent<GhostComponent>();
 
 	if (!ghostComponent) {
 		return;
 	}
 
 	//Check if it has a renderComponent
-	auto renderComponent = pGameObject->GetComponent<dae::RenderComponent>();
+	auto renderComponent = m_pGameObject->GetComponent<dae::RenderComponent>();
 
 	if (renderComponent) {
 		renderComponent->SetTexture(m_DeadTexture);
 	}
 }
 
-void GhostDeadState::Exit(dae::GameObject* pGameObject)
+void GhostDeadState::Exit()
+{
+}
+
+void GhostDeadState::Update()
+{
+}
+
+void GhostDeadState::FixedUpdate()
 {
 }
