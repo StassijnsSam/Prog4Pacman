@@ -17,6 +17,8 @@ namespace dae {
 
 		virtual bool IsColliding(ColliderComponent* other) override;
 
+		float GetRadius();
+
 	private:
 
 		float m_Radius{};
