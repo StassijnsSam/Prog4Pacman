@@ -39,14 +39,13 @@ void dae::GameObject::FixedUpdate()
 
 void dae::GameObject::LateUpdate()
 {
-	
-	/*for (auto& it : m_pComponents) {
+	for (auto& it : m_pComponents) {
 		if (it.second.get() != nullptr) {
 			if (it.second.get()->IsMarkedForDeletion()) {
-
+				m_pComponents.erase(std::remove(m_pComponents.begin(), m_pComponents.end(), it), m_pComponents.end());
 			}
 		}
-	}*/
+	}
 }
 
 void dae::GameObject::Render() const
