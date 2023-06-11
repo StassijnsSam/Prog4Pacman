@@ -31,6 +31,14 @@ void PacmanComponent::Update()
 			m_IsInvincible = false;
 		}
 	}
+
+	if (m_CanKill) {
+		m_CanKillTimer -= deltaTime;
+
+		if (m_CanKillTimer <= 0.f) {
+			m_CanKill = false;
+		}
+	}
 }
 
 void PacmanComponent::Render() const
@@ -58,6 +66,16 @@ int PacmanComponent::GetLives()
 	return m_Lives;
 }
 
+bool PacmanComponent::GetCanKill()
+{
+	return m_CanKill;
+}
+
+bool PacmanComponent::GetIsInvincible()
+{
+	return m_IsInvincible;
+}
+
 void PacmanComponent::OnCollision(dae::GameObject* other)
 {
 	//Check if its an enemy
@@ -78,6 +96,13 @@ void PacmanComponent::OnCollision(dae::GameObject* other)
 		//Notify score observer
 		m_PacmanSubject.get()->Notify(this->GetOwner(), EventType::PLAYER_GOT_SCORE);
 	}
+}
+
+void PacmanComponent::EnableCanKill()
+{
+	m_CanKill = true;
+
+	m_CanKillTimer = m_MaxCanKillTime;
 }
 
 void PacmanComponent::EnableInvincible()

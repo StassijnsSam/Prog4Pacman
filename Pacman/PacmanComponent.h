@@ -26,17 +26,26 @@ public:
 	int GetScore();
 	int GetLives();
 
+	bool GetCanKill();
+	bool GetIsInvincible();
+
 private:
 	void OnCollision(dae::GameObject* other);
 
 	int m_Lives{ 3 };
 	int m_Score{ 0 };
 
+	bool m_CanKill{ false };
+
+	void EnableCanKill();
+	float m_CanKillTimer{};
+	float m_MaxCanKillTime{ 3.0f };
+
 	bool m_IsInvincible{ false };
 
 	void EnableInvincible();
 	float m_InvincibilityTimer{};
-	float m_MaxInvincibilityTime{ 3.0f };
+	float m_MaxInvincibilityTime{ 1.0f };
 
 	std::unique_ptr<dae::Subject> m_PacmanSubject{};
 };

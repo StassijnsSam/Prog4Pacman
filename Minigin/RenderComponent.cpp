@@ -11,7 +11,7 @@ dae::RenderComponent::RenderComponent(GameObject* pOwner)
 }
 
 dae::RenderComponent::RenderComponent(GameObject* pOwner, const std::string& filename)
-	:BaseComponent(pOwner)
+	:BaseComponent(pOwner), m_TexturePath(filename)
 {
 	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
 }
@@ -66,6 +66,7 @@ void dae::RenderComponent::Recieve(int) const
 void dae::RenderComponent::SetTexture(const std::string& filename)
 {
 	m_pTexture = dae::ResourceManager::GetInstance().LoadTexture(filename);
+	m_TexturePath = filename;
 }
 
 void dae::RenderComponent::SetTexture(std::shared_ptr<dae::Texture2D> pTexture)
@@ -76,4 +77,9 @@ void dae::RenderComponent::SetTexture(std::shared_ptr<dae::Texture2D> pTexture)
 void dae::RenderComponent::SetIsVisible(bool isVisible)
 {
 	m_IsVisible = isVisible;
+}
+
+const std::string& dae::RenderComponent::GetTexturePath()
+{
+	return m_TexturePath;
 }
