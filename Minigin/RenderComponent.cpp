@@ -56,7 +56,8 @@ void dae::RenderComponent::Render() const
 	}
 
 	const auto& pos = m_pTransform->GetWorldPosition();
-	dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
+	const double angle = static_cast<double>(m_pTransform->GetRotation());
+	dae::Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y, angle);
 }
 
 void dae::RenderComponent::Recieve(int) const

@@ -15,4 +15,5 @@ void dae::Move::Execute()
 	auto movement = m_Direction * m_MoveSpeed * Time::GetInstance().GetDeltaTime();
 
 	m_pGameObject->GetTransform()->AddLocalPosition(movement);
+	m_pGameObject->GetTransform()->SetRotationFromDirection(m_Direction);
 }

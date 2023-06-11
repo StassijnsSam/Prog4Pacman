@@ -1,5 +1,11 @@
 #include "Transform.h"
 #include "GameObject.h"
+#include <cmath>
+#define _USE_MATH_DEFINES
+
+#ifndef M_PI
+constexpr double M_PI = 3.14159265358979323846;
+#endif
 
 dae::Transform::Transform(GameObject* pOwner)
 	:BaseComponent(pOwner)
@@ -72,6 +78,20 @@ float dae::Transform::GetRotation() const
 void dae::Transform::SetRotation(float rot)
 {
 	m_Rotation = rot;
+}
+
+void dae::Transform::SetRotationFromDirection(const glm::vec2& direction)
+{
+	SetDirection(direction);
+	
+	float angleRadians = std::atan2(direction.y, direction.x);
+
+	m_Rotation = angleRadians * 180.f / static_cast<float>(M_PI);
+}
+
+void dae::Transform::SetDirection(const glm::vec2& direction)
+{
+	m_Direction = direction;
 }
 
 void dae::Transform::AddRotation(float rot)

@@ -32,6 +32,8 @@ namespace dae {
 
 		float GetRotation() const;
 		void SetRotation(float rot);
+		void SetRotationFromDirection(const glm::vec2& direction);
+		void SetDirection(const glm::vec2& direction);
 		void AddRotation(float rot);
 
 		void SetDirty();
@@ -44,6 +46,8 @@ namespace dae {
 
 		float m_Rotation{};
 		float m_Size{};
+
+		glm::vec2 m_Direction{};
 	};
 }
 
