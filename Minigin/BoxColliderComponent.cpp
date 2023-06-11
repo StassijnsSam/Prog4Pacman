@@ -31,7 +31,7 @@ bool dae::BoxColliderComponent::IsColliding(ColliderComponent* other)
 
 	if (pOtherColliderBox) {
 		auto ownerLocation = m_pOwner->GetTransform()->GetWorldPosition();
-		auto otherOwnerLocation = pOtherColliderCircle->GetOwner()->GetTransform()->GetWorldPosition();
+		auto otherOwnerLocation = pOtherColliderBox->GetOwner()->GetTransform()->GetWorldPosition();
 
 		glm::vec2 otherColliderSize = pOtherColliderBox->GetSize();
 

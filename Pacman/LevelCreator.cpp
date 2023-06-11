@@ -10,6 +10,8 @@
 #include "PacmanComponent.h"
 #include "InputManager.h"
 #include "MoveCommands.h"
+#include "BoxColliderComponent.h"
+#include "WallComponent.h"
 
 void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
 {
@@ -33,6 +35,8 @@ void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
                     glm::vec2{ startPosX + col * level.gridElementSize, startPosY + row * level.gridElementSize });
 
                 wall.get()->AddComponent<dae::RenderComponent>("wall.png");
+                wall.get()->AddComponent<dae::BoxColliderComponent>(glm::vec2{10.0f, 10.0f});
+                wall.get()->AddComponent<WallComponent>();
 
                 scene.Add(wall);
 

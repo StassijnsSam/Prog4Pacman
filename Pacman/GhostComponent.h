@@ -21,7 +21,7 @@ public:
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void Render()const override;
-	void Recieve(int message) const override;
+	virtual void Recieve(int message) const override;
 
 	int GetIsDead();
 

@@ -161,6 +161,7 @@
     <ClCompile Include="PacmanComponent.cpp" />
     <ClCompile Include="PacmanLevel.cpp" />
     <ClCompile Include="ScoreDisplayComponent.cpp" />
+    <ClCompile Include="WallComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h" />
@@ -173,6 +174,7 @@
     <ClInclude Include="PacmanComponent.h" />
     <ClInclude Include="PacmanLevel.h" />
     <ClInclude Include="ScoreDisplayComponent.h" />
+    <ClInclude Include="WallComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

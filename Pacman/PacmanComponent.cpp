@@ -5,6 +5,7 @@
 #include "GhostComponent.h"
 #include "Enums.h"
 #include "ServiceLocator.h"
+#include "WallComponent.h"
 
 PacmanComponent::PacmanComponent(dae::GameObject* pGameObject)
 	:BaseComponent(pGameObject)
@@ -119,6 +120,14 @@ void PacmanComponent::OnCollision(dae::GameObject* other)
 
 		//Play sound
 		dae::ServiceLocator::GetSoundService()->Play("pacman_chomp.wav", 30);
+	}
+
+	//Check if its a wall
+	auto wallComponent = other->GetComponent<WallComponent>();
+	if (wallComponent){
+		//If you run into a wall, set your position to the position it is right now
+		auto transform = GetOwner()->GetTransform();
+		transform->SetWorldPosition({ transform->GetWorldPosition().x, transform->GetWorldPosition().y });
 	}
 }
 
