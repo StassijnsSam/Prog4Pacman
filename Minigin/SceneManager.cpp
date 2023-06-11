@@ -47,3 +47,8 @@ dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
 	m_scenes.push_back(scene);
 	return *scene;
 }
+
+void dae::SceneManager::AddScene(std::shared_ptr<Scene> scene)
+{
+	m_scenes.emplace_back(scene);
+}

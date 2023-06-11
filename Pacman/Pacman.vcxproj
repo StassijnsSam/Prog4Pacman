@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="GhostComponent.cpp" />
     <ClCompile Include="GhostStates.cpp" />
+    <ClCompile Include="LevelCreator.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
     <ClCompile Include="LootComponent.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Enums.h" />
     <ClInclude Include="GhostComponent.h" />
     <ClInclude Include="GhostStates.h" />
+    <ClInclude Include="LevelCreator.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
     <ClInclude Include="LootComponent.h" />

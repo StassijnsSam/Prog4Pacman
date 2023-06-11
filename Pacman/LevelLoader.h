@@ -9,7 +9,7 @@ public:
 	LevelLoader() = default;
 	~LevelLoader() = default;
 
-	bool LoadLevel(const std::string& jsonPath, PacmanLevel& level);
+	static bool LoadLevel(const std::string& jsonPath, PacmanLevel& level);
 private:
 };
 
