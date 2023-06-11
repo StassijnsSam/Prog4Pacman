@@ -12,6 +12,10 @@
 #include "MoveCommands.h"
 #include "BoxColliderComponent.h"
 #include "WallComponent.h"
+#include "TextComponent.h"
+#include "LivesDisplayComponent.h"
+#include "ResourceManager.h"
+#include "ScoreDisplayComponent.h"
 
 void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
 {
@@ -111,6 +115,7 @@ void LevelCreator::CreateLevel(const PacmanLevel& level, dae::Scene& scene)
                 scene.Add(pacman);
 
                 SetupKeyboardPlayer(pacman.get());
+                SetupPlayerHud(pacman.get(), scene);
                 break;
             }
 
@@ -137,6 +142,8 @@ void LevelCreator::SetupKeyboardPlayer(dae::GameObject* pPlayer)
     dae::InputManager::GetInstance().CreateKeyboardCommand(
     	dae::ButtonState::Hold, SDL_SCANCODE_DOWN,
     	std::make_unique<dae::Move>(pPlayer, glm::vec2{ 0, 1 }, movementSpeed));
+    
+
 }
 
 void LevelCreator::SetupConsolePlayer(dae::GameObject* pPlayer)
@@ -159,4 +166,50 @@ void LevelCreator::SetupConsolePlayer(dae::GameObject* pPlayer)
     dae::InputManager::GetInstance().CreateConsoleCommand(
     	dae::ButtonState::Hold, dae::XBoxController::ControllerButton::DPadDown,
     	std::make_unique<dae::Move>(pPlayer, glm::vec2{ 0, 1 }, movementSpeed));
+}
+
+void LevelCreator::SetupPlayerHud(dae::GameObject* pPlayer, dae::Scene& scene)
+{
+    auto pacmanComponent = pPlayer->GetComponent<PacmanComponent>();
+    if (!pacmanComponent) {
+        return;
+    }
+    
+    auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+    //Add a score display
+    auto scoreDisplay = std::make_shared<dae::GameObject>(glm::vec2{ 20.f, 30.f });
+
+    scoreDisplay.get()->AddComponent<dae::TextComponent>("0", font, SDL_Color{ 255, 0, 0 });
+    scoreDisplay.get()->AddComponent<dae::RenderComponent>();
+    auto scoreDisplayComponent = scoreDisplay.get()->AddComponent<ScoreDisplayComponent>();
+
+    pacmanComponent->AddObserver(scoreDisplayComponent);
+    
+    scene.Add(scoreDisplay);
+
+    //Add 3 life textures
+    auto life1 = std::make_shared<dae::GameObject>(glm::vec2{ 20.f, 450.f });
+    auto renderComponent1 = life1.get()->AddComponent<dae::RenderComponent>("pacman.png");
+    scene.Add(life1);
+
+    auto life2 = std::make_shared<dae::GameObject>(glm::vec2{ 20.f, 430.f });
+    auto renderComponent2 = life2.get()->AddComponent<dae::RenderComponent>("pacman.png");
+    scene.Add(life2);
+
+    auto life3 = std::make_shared<dae::GameObject>(glm::vec2{ 20.f, 410.f });
+    auto renderComponent3 = life3.get()->AddComponent<dae::RenderComponent>("pacman.png");
+    scene.Add(life3);
+
+    //	Put their renderComponents in a vector
+    auto livesRenderComponents = std::vector<dae::RenderComponent*>();
+    livesRenderComponents.emplace_back(renderComponent1);
+    livesRenderComponents.emplace_back(renderComponent2);
+    livesRenderComponents.emplace_back(renderComponent3);
+
+    //Create a lives display
+    auto livesDisplay = std::make_shared<dae::GameObject>();
+    auto livesDisplayComponent = livesDisplay.get()->AddComponent<LivesDisplayComponent>(livesRenderComponents);
+    scene.Add(livesDisplay);
+
+    pacmanComponent->AddObserver(livesDisplayComponent);
 }
