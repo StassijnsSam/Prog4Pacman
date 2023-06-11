@@ -12,37 +12,43 @@ dae::GameObject::GameObject(glm::vec2 position)
 
 void dae::GameObject::Initialize()
 {
-	for (auto& it : m_pComponents) {
-		if (it.second != nullptr) {
-			it.second->Initialize();
+	for (auto& componentPair : m_pComponents) {
+		if (componentPair.second != nullptr) {
+			componentPair.second->Initialize();
 		}
 	}
 }
 
 void dae::GameObject::Update()
 {
-	for (auto& it : m_pComponents) {
-		if (it.second != nullptr) {
-			it.second->Update();
+	for (auto& componentPair : m_pComponents) {
+		if (componentPair.second != nullptr) {
+			componentPair.second->Update();
 		}
 	}
 }
 
 void dae::GameObject::FixedUpdate()
 {
-	for (auto& it : m_pComponents) {
-		if (it.second != nullptr) {
-			it.second->FixedUpdate();
+	for (auto& componentPair : m_pComponents) {
+		if (componentPair.second != nullptr) {
+			componentPair.second->FixedUpdate();
 		}
 	}
 }
 
 void dae::GameObject::LateUpdate()
 {
-	for (auto& it : m_pComponents) {
-		if (it.second.get() != nullptr) {
-			if (it.second.get()->IsMarkedForDeletion()) {
-				m_pComponents.erase(std::remove(m_pComponents.begin(), m_pComponents.end(), it), m_pComponents.end());
+	//Only need to remove them if you yourself arent marked for deletion, otherwise they will all be automatically removed anyways
+	if (m_IsMarkedForDeletion) {
+		return;
+	}
+	
+	for (auto& componentPair : m_pComponents) {
+		if (componentPair.second.get() != nullptr) {
+			if (componentPair.second.get()->IsMarkedForDeletion()) {
+				auto it = m_pComponents.find(componentPair.first);
+				m_pComponents.erase(it);
 			}
 		}
 	}
@@ -50,9 +56,9 @@ void dae::GameObject::LateUpdate()
 
 void dae::GameObject::Render() const
 {
-	for (auto& it : m_pComponents) {
-		if (it.second != nullptr) {
-			it.second->Render();
+	for (auto& componentPair : m_pComponents) {
+		if (componentPair.second != nullptr) {
+			componentPair.second->Render();
 		}
 	}
 }
@@ -65,9 +71,9 @@ dae::Transform* dae::GameObject::GetTransform()
 void dae::GameObject::Send(int message)
 {
 	//Send message to all components
-	for (auto& it : m_pComponents) {
-		if (it.second != nullptr) {
-			it.second->Recieve(message);
+	for (auto& componentPair : m_pComponents) {
+		if (componentPair.second != nullptr) {
+			componentPair.second->Recieve(message);
 		}
 	}
 }
@@ -77,9 +83,9 @@ void dae::GameObject::MarkForDeletion()
 	m_IsMarkedForDeletion = true;
 
 	//Also mark all of the components of this object for deletion
-	for (const auto& it : m_pComponents) {
-		if (it.second != nullptr) {
-			it.second->MarkForDeletion();
+	for (const auto& componentPair : m_pComponents) {
+		if (componentPair.second != nullptr) {
+			componentPair.second->MarkForDeletion();
 		}
 	}
 

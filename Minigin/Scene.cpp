@@ -56,7 +56,7 @@ void dae::Scene::LateUpdate()
 			continue;
 		}
 		
-		//First lateUpdate the object so the component will be removed first
+		//First lateUpdate the object so any components that need to be removed are removed
 		object->LateUpdate();
 
 		if (object->IsMarkedForDeletion()) {
