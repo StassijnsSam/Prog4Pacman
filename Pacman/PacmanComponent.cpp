@@ -53,6 +53,11 @@ int PacmanComponent::GetScore()
 	return m_Score;
 }
 
+int PacmanComponent::GetLives()
+{
+	return m_Lives;
+}
+
 void PacmanComponent::OnCollision(dae::GameObject* other)
 {
 	//Check if its an enemy

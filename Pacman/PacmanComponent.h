@@ -24,6 +24,7 @@ public:
 	void AddObserver(dae::Observer* observer);
 
 	int GetScore();
+	int GetLives();
 
 private:
 	void OnCollision(dae::GameObject* other);

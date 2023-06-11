@@ -28,10 +28,14 @@ namespace dae {
 
 		void SetTexture(const std::string& filename);
 		void SetTexture(std::shared_ptr<dae::Texture2D> pTexture);
+
+		void SetIsVisible(bool isVisible);
 	private:
 
 		std::shared_ptr<dae::Texture2D> m_pTexture{ nullptr };
 		Transform* m_pTransform{ nullptr };
+
+		bool m_IsVisible{ true };
 	};
 }
 

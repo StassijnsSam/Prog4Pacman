@@ -40,6 +40,11 @@ void dae::RenderComponent::Update()
 
 void dae::RenderComponent::Render() const
 {
+	//Check if it is visible
+	if (!m_IsVisible) {
+		return;
+	}
+	
 	if (m_pTexture == nullptr) {
 		//Throw error that texture is not set
 		return;
@@ -66,4 +71,9 @@ void dae::RenderComponent::SetTexture(const std::string& filename)
 void dae::RenderComponent::SetTexture(std::shared_ptr<dae::Texture2D> pTexture)
 {
 	m_pTexture = pTexture;
+}
+
+void dae::RenderComponent::SetIsVisible(bool isVisible)
+{
+	m_IsVisible = isVisible;
 }

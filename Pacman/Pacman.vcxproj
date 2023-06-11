@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LivesDisplayComponent.cpp" />
     <ClCompile Include="LootComponent.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="PacmanComponent.cpp" />
@@ -158,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h" />
+    <ClInclude Include="LivesDisplayComponent.h" />
     <ClInclude Include="LootComponent.h" />
     <ClInclude Include="PacmanComponent.h" />
     <ClInclude Include="ScoreDisplayComponent.h" />
